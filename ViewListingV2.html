@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<!--firebase-->
+	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!--javascript for carousel-->
+ <script type="text/javascript">
+
+ $(document).ready(function() {
+    $('#Carousel').carousel({
+        interval: 10000
+    })
+});
+</script>
+    
+
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>View Listing</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+   <link href="viewlistingV2.css" rel="stylesheet">
+   <link href="modal.css" rel="stylesheet">
+  
+
+
+  
+  </head>
+
+  <body>
+  
+  <script>
+    var selectedAd = sessionStorage.getItem('viewListingAd');
+	var selectedUser = sessionStorage.getItem('viewListingUser');
+	var selectedDesc = sessionStorage.getItem('viewListingDesc');
+	var selectedDate = sessionStorage.getItem('viewListingDate');
+
+	var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+	ref.once("value", function(snapshot) {
+		var data = snapshot.val();
+		displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone);
+	});
+
+	function displayUserDetails(fname, lname, email, county, telephone) {
+		$('#DisplayLoc span').text(county);
+		$('#ad-title span').text(selectedAd);
+		$('#showdesc').text(selectedDesc);
+		$('#DisplayDate span').text(selectedDate);
+		$('#DisplayName span').text(fname + " " + lname);
+		$('#DisplayNo span').text(telephone);
+		$('#DisplayEmail span').text(email);
+	}
+
+	
+		function ArtsAndCrafts(){
+			sessionStorage.setItem('label', 'Arts and Crafts');
+		}
+		function Coding(){
+			sessionStorage.setItem('label', 'Coding');
+		}
+		function Cooking(){
+			sessionStorage.setItem('label', 'Cooking');
+		}
+		function Construction(){
+			sessionStorage.setItem('label', 'Construction');
+		}
+		function Carpentry(){
+			sessionStorage.setItem('label', 'Carpentry');
+		}
+		function Farming(){
+			sessionStorage.setItem('label', 'Farming');
+		}
+		function Languages(){
+			sessionStorage.setItem('label', 'Languages');
+		}
+		function Mechanics(){
+			sessionStorage.setItem('label', 'Mechanics');
+		}
+		function Painting(){
+			sessionStorage.setItem('label', 'Painting');
+		}
+		function Sports(){
+			sessionStorage.setItem('label', 'Sports');
+		}
+		function WebDesign(){
+			sessionStorage.setItem('label', 'Web Design');
+		}
+		function Other(){
+			sessionStorage.setItem('label', 'Other');
+		}
+	
+  </script>
+  
+<!--FIXED MAIN NAVBAR-->
+  
+  <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--MOBILE AND TABLET MENU ICON-->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <!--END MOBILE AND TABLET MENU ICON-->
+        <a class="navbar-brand" href="#">SwapMySkills</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <!--NAVIGATION LINKS-->
+        <ul class="nav navbar-nav navbar-center">
+          <li><a href="HomePageV2.html">Home</a></li>
+          <li><a href="#">About</a></li>
+          <!--SAMPLE DROPDOWN-->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Admin & Dashboard</li>
+              <li><a href="#">Admin 1</a></li>
+              <li><a href="#">Admin 2</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Portfolio</li>
+              <li><a href="#">Portfolio 1</a></li>
+              <li><a href="#">Portfolio 2</a></li>
+            </ul>
+          </li>
+          <!--END SAMPLE DROPDOWN-->
+          <li><a href="#contact" data-toggle="modal">Contact</a></li>
+        </ul>
+        <!--NAVIGATION LINKS-->
+        <!--SEARCH BAR-->
+        <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+					<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+					<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+					<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+					<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+					<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+					<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+					<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+					<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+					<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+					<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+					<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+				</ul>
+          </li>
+          <!--<div class="row">
+            <div id="custom-search-input">
+              <div class="input-group">
+                <input type="text" class="  search-query form-control" placeholder="Search" />
+                <span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+                </button></span>
+              </div>
+            </div>
+          </div>-->
+        </ul>
+        <!--END SEARCHBAR-->
+      </div>
+    </div>
+  </div>
+  <!--END MAIN NAVBAR-->
+<br>
+
+
+
+     <!--container for all ad details-->
+		  <div class="container" id="adinfo">
+          <h1 class="text-center" id="ad-title" ><span id="here"></span><!--listing name/title--></h1> 
+        <div class="panel panel-default"> 
+          <div class="panel-body">
+
+           <div class="ad-attributes text-center"><!--listing-attributes-->
+            <ul style="list-style-type:none">
+              <li id="DisplayDate">
+                <b>Date Listed:</b> <span></span>
+              </li>
+              <li id="DisplayLoc">
+                <b>Location:</b> <span></span>
+              </li>
+            </ul>
+           </div><!--/listing-attributes-->
+         </div> <!-- panel-body  -->
+        </div>
+          
+<!-- description panel  -->
+      
+           <div class="panel panel-default">  
+             <div class="panel-heading text-center"><strong>Ad Description</strong> </div> <!--panel heading-->
+              <div class="panel-body">
+               <div class="ad-content">
+       
+          <p class="ad-description" id="showdesc"> 
+
+          </p>
+
+               </div> <!--/ad-content-->
+           </div> <!-- /panel-body-->
+        </div>  <!-- end of description panel  -->
+
+
+         <!--coantct info panel  -->
+      <div class="panel panel-default">
+        <div class="panel-heading text-center" id="contactInfo"><strong>Contact info</strong> </div> <!--panel heading-->
+          <div class="panel-body">
+ 
+            <div class="contact-info text-center">
+            <ul style="list-style-type:none">
+              
+              <li id="DisplayName">
+                <b>Listed by:</b> <span></span>
+              </li>
+              <li id="DisplayNo">
+                <b>Phone:</b> <span></span>
+              </li>
+              <li id="DisplayEmail">
+              <b>Email:</b> <span></span>
+              </li>
+            </ul>
+
+          </div><!--/contact-info-->
+               
+        </div> <!--/panel-body-->
+           
+      </div> <!--/panel-default-->
+
+           <!-- end ofcoantct info panel  -->
+
+
+  </div><!--end of container for all ad details-->
+  
+      <br>
+
+<!--------------------------------- -->
+
+
+
+
+
+<div class="container"> <!--container for carausel-->
+    <div class="row">
+    <div class="col-md-12">
+                <div id="Carousel" class="carousel slide">
+                 
+                <ol class="carousel-indicators">
+                    <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#Carousel" data-slide-to="1"></li>
+         
+                </ol>
+                 
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    
+                <div class="item active">
+                  <div class="row">
+                  <!-- -->
+                    <div class="col-md-4"><a href="#" class=""><img src="http://2.imimg.com/data2/UT/EJ/MY-3670940/wall-painting-250x250.jpg" alt="Image" style="max-width:100%;"></a></div>
+                    <div class="col-md-4"><a href="#" class=""><img src="http://2.imimg.com/data2/YR/XN/MY-/9-250x250.jpg" alt="Image" style="max-width:100%;"></a></div>
+                    <div class="col-md-4"><a href="#" class=""><img src="http://3.imimg.com/data3/HL/PI/MY-10844451/exterior-painting-250x250.jpg" alt="Image" style="max-width:100%;"></a></div>
+                  
+                  </div><!--.row-->
+                </div><!--.item-->
+                 
+                <div class="item">
+                  <div class="row">
+                    <div class="col-md-4"><a href="#" class=""><img src="http://2.imimg.com/data2/YR/XN/MY-/9-250x250.jpg" alt="Image" style="max-width:100%;"></a></div>
+                    <div class="col-md-4"><a href="#" class=""><img src="http://4.imimg.com/data4/LI/FQ/MY-13175618/exterior-house-painting-services-250x250.jpg" alt="Image" style="max-width:100%;"></a></div>                   
+                    <div class="col-md-4"><a href="#" class=""><img src="http://3.imimg.com/data3/WP/WD/MY-3348432/home-painting-services-250x250.jpeg" alt="Image" style="max-width:100%;"></a></div>
+
+                   <!-- add extra pics
+
+                   <div class="col-md-4"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div> -->
+                    
+                  </div><!--.row-->
+                </div><!--.item-->
+                 
+      
+                 
+                </div><!--.carousel-inner-->
+                  <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+                  <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+                </div><!--.Carousel-->
+                 
+    </div>
+  </div>
+</div><!--.container for carousel-->
+
+
+	<!-- FIXED FOOTER NAVBAR -->
+    
+    
+  <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <div class="navbar-text pull-left" id="footerText">
+        <p>2016 Software Project</p>
+      </div>
+      <div class="navbar-text pull-right">
+        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+      </div>
+    </div>
+  </div>
+  <!--END FIXED FOOTER NAVBAR-->
+    
+	 
+    
+  <!--CONTACT MODAL-->
+  <div class="modal fade" id="contact" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Contact</h4>
+        </div>
+        <div class="modal-body">
+          <p>For general inquiries please email ___@______.__</p>
+        </div>
+        <div class="modal-footer">  <!-- Button to close modal -->
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--END CONTACT MODAL-->
+	
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+   	
+  </body>
+</html>

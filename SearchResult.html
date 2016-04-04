@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+    <!--firebase-->
+	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--JAVASCRIPT TO CYCLE IMAGES-->
+	
+	<!--END JAVASCRIPT TO CYCLE IMAGES-->
+		
+
+    <title>Search Results</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="modal.css" rel="stylesheet">
+	<link href="SearchResults.css"rel="stylesheet" type="text/css" >
+
+  
+  </head>
+  
+  <!---------------------------------------------------->
+  
+  <body>
+	<script>
+		$(document).ready(function() {
+		  $('body').hide();
+		});
+
+		var count = 0;
+		var selectedSkill = sessionStorage.getItem('label');
+		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
+		//ref.limitToLast(20).on("child_added", function(snapshot) {
+		ref.limitToLast(10).once("value", function(snapshot){
+			snapshot.forEach(function(snapshot2){
+			    			
+				var user = snapshot2.child("user").val();
+				var ref2 = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + user);
+				ref2.once("value", function(usersnapshot) {
+					var data = usersnapshot.val();
+					
+					count++;
+					var ad = $('<article class="search-result row"><div class="col-xs-12 col-sm-12 col-md-3"><a href="#" title="profile-img" class=""><img src="http://smartcatdesign.net/preview/tyros/wp-content/uploads/2014/12/team1-300x300-300x300-300x300.png" alt="image" /></a></div><div class="col-xs-12 col-sm-12 col-md-2"><ul class="meta-search"><li class = "Date"><i class="glyphicon glyphicon-calendar"></i> <span>' + snapshot2.child("date").val()  + '</span></li><li><i class="glyphicon glyphicon-map-marker"></i> <span>'+ data.county +'</span></li><li><i class="glyphicon glyphicon-tags"></i> <span>'+ selectedSkill +'</span></li></ul></div><div class="col-xs-12 col-sm-12 col-md-7 excerpet"><h3><a href="#" onclick="SaveProfileInfo(\''+ snapshot2.child("user").val() +'\')" title=""> '+ data.fname + ' ' + data.lname +'</a></h3><h3> ' + snapshot2.key() + '</h3><p>'+ snapshot2.child("description").val() +'</p><div class="view-ad" id="viewAdBtn"><a href="#" onclick="SaveInfo(\'' + snapshot2.child("user").val() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-success">View Listing</a></div></div><span class="clearfix borda" id="end1"></span></article> ');
+				
+					$("section").append(ad);
+					$('#num').text(count);
+					$('#skillName').text(selectedSkill);
+					
+				});
+
+			});
+		}); 
+		
+		function SaveProfileInfo(userId){
+			var authData = ref.getAuth();
+			if(authData == null){
+				alert("You must be logged in to view user accounts");
+			}else{
+				sessionStorage.setItem('profilePageUser', userId);
+				location.href="ProfileV3.html"; 
+			}
+		}
+		
+		function SaveInfo(userId, advert, adDescription,adDate){
+			var authData = ref.getAuth();
+			if(authData == null){
+				alert("You must be logged in to view listing details");
+			}else{
+				sessionStorage.setItem('viewListingAd', advert);
+				sessionStorage.setItem('viewListingUser', userId); 
+				sessionStorage.setItem('viewListingDesc', adDescription);
+				sessionStorage.setItem('viewListingDate', adDate);
+				location.href='ViewListingV2.html';
+			}
+		}
+
+		function ArtsAndCrafts(){
+			sessionStorage.setItem('label', 'Arts and Crafts');
+		}
+		function Coding(){
+			sessionStorage.setItem('label', 'Coding');
+		}
+		function Cooking(){
+			sessionStorage.setItem('label', 'Cooking');
+		}
+		function Construction(){
+			sessionStorage.setItem('label', 'Construction');
+		}
+		function Carpentry(){
+			sessionStorage.setItem('label', 'Carpentry');
+		}
+		function Farming(){
+			sessionStorage.setItem('label', 'Farming');
+		}
+		function Languages(){
+			sessionStorage.setItem('label', 'Languages');
+		}
+		function Mechanics(){
+			sessionStorage.setItem('label', 'Mechanics');
+		}
+		function Painting(){
+			sessionStorage.setItem('label', 'Painting');
+		}
+		function Sports(){
+			sessionStorage.setItem('label', 'Sports');
+		}
+		function WebDesign(){
+			sessionStorage.setItem('label', 'Web Design');
+		}
+		function Other(){
+			sessionStorage.setItem('label', 'Other');
+		}
+		
+    	$(window).load(function() {
+		$("body").show();
+		}); 
+	</script>
+	<!--FIXED MAIN NAVBAR-->
+  
+	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+			<!--MOBILE AND TABLET MENU ICON-->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<!--END MOBILE AND TABLET MENU ICON-->
+
+				<a class="navbar-brand" href="#">SwapMySkills</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<!--NAVIGATION LINKS-->
+				<ul class="nav navbar-nav navbar-center">
+					<li><a href="HomePageV2.html">Home</a></li>
+					<li><a href="#">About</a></li>
+					<!--SAMPLE DROPDOWN-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Admin & Dashboard</li>
+							<li><a href="#">Admin 1</a></li>
+							<li><a href="#">Admin 2</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Portfolio</li>
+							<li><a href="#">Portfolio 1</a></li>
+							<li><a href="#">Portfolio 2</a></li>
+						</ul>
+					</li>
+					<!--END SAMPLE DROPDOWN-->
+					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+				</ul>
+				<!--NAVIGATION LINKS-->
+				<!--SEARCH BAR-->
+				<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+							<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+							<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+							<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+							<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+						</ul>
+					</li>
+					<!--<div class="row">
+						<div id="custom-search-input">
+							<div class="input-group">
+								<input type="text" class="  search-query form-control" placeholder="Search" />
+								<span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+								</button></span>
+							</div>
+						</div>
+					</div>-->
+				</ul>
+				<!--END SEARCHBAR-->
+			</div>
+		</div>
+	</div>
+	<!--END MAIN NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+
+		
+		<div class="container" id="searchResults"> <!--container for search results-->
+
+		<h1 class="text-center" id="search-heading">Search Results</h1>
+    
+		<h2 class="lead text-center"><strong id = "num" class="text-danger"></strong> results were found for the search for <strong id = "skillName" class="text-danger"></strong></h2>	<!--shows reults found for chosen category-->
+	
+
+    <section class="col-xs-12 col-sm-6 col-md-12">
+
+        
+         <!--start of search result 1-->
+		<!--<article class="search-result row">
+			<div class="col-xs-12 col-sm-12 col-md-3">
+		
+				<a href="#" title="profile-img" class=""><img src="http://smartcatdesign.net/preview/tyros/wp-content/uploads/2014/12/team1-300x300-300x300-300x300.png" alt="image" /></a>
+			</div> 
+			<div class="col-xs-12 col-sm-12 col-md-2">
+				<ul class="meta-search">
+					<li><i class="glyphicon glyphicon-calendar"></i> <span>02/03/2016</span></li>
+					<li><i class="glyphicon glyphicon-map-marker"></i> <span>Dublin</span></li>
+					<li><i class="glyphicon glyphicon-tags"></i> <span>Painting</span></li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+				<h3> ' + snapshot2.key() + '</h3><br>
+				<h3><a href="#" title="">Tony Wright</a></h3>
+				
+				<p class = "Desc">A short  description can go here.  A short  description can go here.  A short description can go here.  A short  description can go here.  </p>				  
+			<div class="view-ad" id="viewAdBtn">
+				<a href="#" class="btn btn-success">View Listing</a>
+			   </div>	
+			</div>
+			<span class="clearfix borda" id="end1"></span>
+		</article> --> <!--end of search result 1-->
+		
+	</section>
+
+</div><!--end of container for search results-->
+
+
+<!------------------------------------->
+
+   <!--page navigator-->
+
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+		 <div class="text-center">  <!--centers the navigator-->
+			<ul class="pagination">
+				<li>
+					<a href="#">Prev</a>
+				</li>
+				<li>
+					<a href="#">1</a>
+				</li>
+				<li>
+					<a href="#">2</a>
+				</li>
+				<li>
+					<a href="#">3</a>
+				</li>
+				<li>
+					<a href="#">4</a>
+				</li>
+				
+				<li>
+					<a href="#">Next</a>
+				</li>
+			</ul>
+		 </div><!--/text-center-->
+		</div><!--/col-md-12 column-->
+    </div> <!-- /row clearfix-->
+
+
+<!--end of page navigator-->
+
+
+
+<!-------------------------------->
+		
+	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<div class="container">
+			<div class="navbar-text pull-left" id="footerText">
+				<p>2016 Software Project</p>
+			</div>
+			<div class="navbar-text pull-right">
+				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+			</div>
+		</div>
+	</div>
+	<!--END FIXED FOOTER NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+		
+		
+		
+	<!--CONTACT MODAL-->
+	<div class="modal fade" id="contact" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Contact</h4>
+				</div>
+				<div class="modal-body">
+					<p>For general inquiries please email ___@______.__</p>
+				</div>
+				<div class="modal-footer">	<!-- Button to close modal -->
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--END CONTACT MODAL-->
+	
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>

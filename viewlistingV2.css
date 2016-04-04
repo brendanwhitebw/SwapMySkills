@@ -1,0 +1,63 @@
+body{
+	padding-top:100px;
+	background-image: url(http://www.cravehealthnow.com/wp-content/uploads/2014/01/1360103186_abstract-green-nature-web-background.jpg);
+	background-size:cover;
+}
+#adinfo{
+	background-color: #fff;
+	width: 70%; 
+    padding: 20px;
+    background: #fff;
+    min-height: 300px;
+}
+#ad-title{
+	/*#558C89 colour of navbar...*/
+	color: #558C89;
+	padding-top: 0px;
+	padding-bottom: 5px;
+}
+
+.ad-description{
+	font-family: inherit; 
+	white-space: pre-wrap
+}
+.panel-default{
+	width: 75%;
+	margin-left: auto; 
+	margin-right: auto
+}
+.carousel {
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+}
+/* The controlsy */
+.carousel-control {
+	left: -12px;
+    height: 40px;
+	width: 40px;
+    background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;
+    margin-top: 90px;
+}
+
+.carousel-control.right {
+	right: -12px;
+}
+/* The indicators */
+.carousel-indicators {
+	right: 50%;
+	top: auto;
+	bottom: -10px;
+	margin-right: -19px;
+}
+/* The colour of the indicators */
+.carousel-indicators li {
+	background: #cecece;
+}
+ul.selMenu {
+    margin-bottom: 1em;
+}
+ol, ul {
+    list-style: none;
+}
