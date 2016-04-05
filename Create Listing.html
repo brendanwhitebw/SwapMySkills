@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  	
+  <!-- test-->	
 	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
 	<!-- date.js library -->
 	<script src= 'date.js' type="text/javascript"></script>
@@ -69,6 +71,7 @@
 	var userRef = myDataRef.child("users");
 	var authData = myDataRef.getAuth();
 	var userKey = authData.uid;
+	//test
 	var flag = false;
 	
 	
@@ -104,6 +107,7 @@
 				description: $('#ad-desc').val(),
 				date: actualDate
 				}
+				//test
 			)
 			
 			var listRef = myDataRef.child($("#section option:selected").text()); 
