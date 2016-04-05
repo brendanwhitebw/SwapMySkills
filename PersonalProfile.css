@@ -173,3 +173,10 @@ a > img {/*the images for the listings*/
 /*End comment section styling*/
 
 /*END LEFT SIDE STYLING*/
+
+#userdetailinput {
+	min-height:200px;
+	max-height:200px;
+	width:100%;
+	overflow:scroll;
+}
