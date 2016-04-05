@@ -48,7 +48,8 @@
 							county: $('#countyinput').val(),	
 							telephone: $('#phoneinput').val(),
 							town: $('#towninput').val(),
-							userdescription: ""
+							userdescription: "",
+							skills: ""
 							}
 						);
 						alert("Successfully created user account");
@@ -412,42 +413,42 @@
 				
 						<div class="form-group has-feedback">	<!-- FirstName -->
 							<label class="control-label" for="firstnamelabel">* First name</label>
-							<input type="text" class="form-control" id="firstnameinput" aria-describedby="firstnameinput" required="">
+							<input type="text" class="form-control" id="firstnameinput" aria-describedby="firstnameinput" required="" maxlength="25">
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- LastName -->
 							<label class="control-label" for="lastnamelabel">* Last name</label>
-							<input type="text" class="form-control" id="lastnameinput" aria-describedby="lastnameinput" required="">
+							<input type="text" class="form-control" id="lastnameinput" aria-describedby="lastnameinput" required="" maxlength="25">
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- Email -->
 							<label class="control-label" for="emaillabel">* Email address</label>
-							<input type="email" class="form-control" id="emailinput" aria-describedby="emailinput" required="">
+							<input type="email" class="form-control" id="emailinput" aria-describedby="emailinput" required="" maxlength="50">
 						</div>
 						
 						<div class="form-group has-feedback">	<!-- Telephone -->
 							<label class="control-label" for="phonelabel">* Telephone</label>
-							<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="">
+							<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- Password -->
 							<label class="control-label" for="passwordlabel">* Password</label>
-							<input type="password" class="form-control" id="passwordinput" aria-describedby="passwordinput" required="">
+							<input type="password" class="form-control" id="passwordinput" aria-describedby="passwordinput" required="" maxlength="30">
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- Password Repeat -->
 							<label class="control-label" for="re-enterpasswordlabel">* Re-enter password</label>
-							<input type="password" class="form-control" id="re-enterpasswordinput" aria-describedby="re-enterpasswordinput" required="">
+							<input type="password" class="form-control" id="re-enterpasswordinput" aria-describedby="re-enterpasswordinput" required="" maxlength="30">
 						</div>
 						
 						<div class="form-group has-feedback">	<!-- Town -->
 							<label class="control-label" for="townlabel">Town/City</label>
-							<input type="text" class="form-control" id="towninput" aria-describedby="towninput">
+							<input type="text" class="form-control" id="towninput" aria-describedby="towninput" maxlength="30"> 
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- County -->
 							<label class="control-label" for="countylabel">County</label>
-							<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput">
+							<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" maxlength="20">
 						</div>
 						
 						<br/>
