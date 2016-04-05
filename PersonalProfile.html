@@ -249,7 +249,7 @@
 			
 			<!--EDIT INFO BUTTON-->
 			<div id="profileEdit">
-				<button type="button" class="btn btn-success">Edit Profile</button>
+				<button type="button" class="btn btn-success" a href="#edit" data-toggle="modal"></a>Edit Profile</button>
 			</div>
 			<!--END EDIT INFO BUTTON-->
 			</center>
@@ -408,6 +408,65 @@
 		</div>
 	</div>
 	<!--END CONTACT MODAL-->
+	
+		<!--EDIT PROFILE-->
+	<div class="modal fade" id="edit" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Edit Profile</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group has-feedback">	<!--NAME-->
+						<label class="control-label" for="namelabel">Name</label>
+						<input type="text" class="form-control" id="nameinput" aria-describedby="nameinput" required="" maxlength="50">
+					</div>
+                
+					<div class="form-group has-feedback">	<!--JOB TITLE-->
+						<label class="control-label" for="jobtitle">Job Title</label>
+						<input type="text" class="form-control" id="jobtitleinput" aria-describedby="jinput" required="" maxlength="50">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--SKILLS-->
+						<label class="control-label" for="skillslabel">Skills</label>
+						<input type="text" class="form-control" id="skillsinput" aria-describedby="skillsinput" required="" maxlength="200">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--LOCATION-->
+						<label class="control-label" for="locationlabel">Location</label>
+						<input type="text" class="form-control" id="locationinput" aria-describedby="locationinput" required="" maxlength="150">
+					</div>
+                
+					<div class="form-group has-feedback">	<!--EMAIL-->
+						<label class="control-label" for="emaillabel">E-Mail</label>
+						<input type="email" class="form-control" id="emailinput" aria-describedby="emailinput" required="" maxlength="50">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--Telephone-->
+						<label class="control-label" for="phonelabel">Telephone</label>
+						<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
+					</div>
+					
+					<center>
+					<label class="control-label" for="userdetaillabel">Detailed Description</label>
+					<div class="form-group has-feedback">	<!--DETAILED DESCRIPTION-->
+						<textarea rows="4" cols="80" id="userdetailinput" aria-describedby="userdetailinput" required="" maxlength="1000"></textarea>
+					</div>
+					
+					<!--SUBMIT BUTTON-->
+					<div class="form-group">
+						<button type="button" class="btn btn-success" onclick="submit()" data-dismiss="modal">SUBMIT CHANGES</button>
+					</div>
+					<!--END SUBMIT BUTTON-->
+					</center>
+				</div>
+				<div class="modal-footer">	<!-- Button to close modal -->
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--EDIT PROFILE MODAL-->
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
