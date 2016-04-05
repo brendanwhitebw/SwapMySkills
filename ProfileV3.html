@@ -54,14 +54,16 @@
 		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
 		ref.once("value", function(snapshot) {
 			var data = snapshot.val();
-			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town);
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.skills, data.userdescription);
 		});
 
-		function displayUserDetails(fname, lname, email, county, telephone, town) {
+		function displayUserDetails(fname, lname, email, county, telephone, town, skills, userdescription) {
 			$('#DisplayLoc span').text(town + "," + county);
 			$('#profileName').text(fname + " " + lname);
 			$('#DisplayNo span').text(telephone);
 			$('#DisplayEmail span').text(email);
+			$('#displaySkill span').text(skills);
+			$('#profileText').text(userdescription);
 		}
 
 	
@@ -212,7 +214,7 @@
 			<!--BASIC INFO-->
 			<div id="profileBasicInfo">
 				<ul>
-					<li>
+					<li id="DisplaySkills">
 						<b>Skills:</b> <span></span>
 					</li>
 					<li id="DisplayLoc">
@@ -283,12 +285,7 @@
 		<div id="largeDiv">
 			<!--PROFILE TEXT-->
 			<div id="profileText">
-				User description and detail can go here.
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
+				No Description...
 			</div>
 			<!--PROFILE TEXT-->
 			<!--USER UPLOADED IMAGES-->
