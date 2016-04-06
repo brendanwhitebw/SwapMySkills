@@ -1,0 +1,171 @@
+/*#homeSearch{
+	margin:auto;
+}
+
+#homeSearch .form-control{
+	border-radius: 3px;
+}
+
+#homeSearch .form-control:focus {
+    background-color: #d5ffd5;
+}*/
+
+
+#hid{
+	overflow: hidden;
+	height: 30px;
+
+}
+.p1{
+	overflow: hidden;
+	height: 80px;
+
+}
+
+.modal-footer{/*position modal footer text*/
+    text-align: left;    
+}
+
+.form-inline .form-group {/*spaces out the sign up modal form*/
+    margin-bottom: 11px;
+}
+
+.form-inline .control-label {/*adds uniformity to form*/
+    width: 110px;
+    text-align:right;
+    margin-right: 10px;
+}
+
+a > img {/*grid listing images*/
+	max-height:250px;
+	max-width:250px;
+	min-height:250px;
+	min-width:250px;
+	margin-top:10px;
+	border:ridge 8px #558C89;
+}
+
+.navbar-text > a {/*navbar links*/
+	color: #FFF;
+	text-decoration:none;
+}
+
+.navbar-default {/*navbar*/
+	background-color: #558C89;
+	border-color: #FFFFFF;
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-brand {/*SiteName*/
+    color:#FFFFFF;
+	font-family: Gabriola, san-serif;
+	font-size: 2.5em;
+}
+
+.navbar-default .navbar-brand:hover,/*on hover and on focus*/
+.navbar-default .navbar-brand:focus {
+	color: #FFF;
+	background-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a,/*the active page*/
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+		color: #FFFFFF;
+		background-color: #8c5558
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	color: #000;
+	background-color: #D9853B;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+	color: #000;
+	background-color: #D9853B;
+}
+
+#toggleButton {/*mobile navigation toggle*/
+	background-color:#D9853B;
+}
+
+.dropdown ul li {/*dropdown menu*/
+	background-color:white;
+}
+
+.dropdown ul > li > a:hover,/*dropdown menu on hover and on focus*/
+.dropdown ul > li > a:focus {
+	color:#000;
+	background-color:#D9853B;
+}
+
+#footerText{
+	color: #FFF;
+}
+
+.col-md-4 {
+	padding:10px;
+	text-align:center;
+}
+
+body {
+	padding-top: 70px;
+	background-color: #caffde;
+	margin-bottom:100px;
+	background-image: url(http://www.cravehealthnow.com/wp-content/uploads/2014/01/1360103186_abstract-green-nature-web-background.jpg);
+	background-size:cover;
+}
+
+#homegrid {
+	margin:10px;
+	padding-top:10px;
+}
+
+#homejumbo {
+	background-image: url(http://d300hy9wtv33uo.cloudfront.net/wp-content/uploads/2012/06/background-illustration.jpg);
+	height:450px;
+	background-size:cover;
+	font-family: Gabriola, sans-serif;
+	font-size:4em;
+}
+
+/*Search bar styling*/
+/*#custom-search-input {
+    margin:0;
+    margin-top: 10px;
+    padding: 0;
+	background-color:#D9853B;
+	width:200px;
+}
+	
+#custom-search-input .search-query:focus {
+    background-color: #d5ffd5;
+}
+	
+#custom-search-input .search-query {
+    padding-right: 3px;
+    padding-right: 4px;
+    padding-left: 3px;
+    padding-left: 4px;
+    margin-bottom: 0;
+    border-radius: 3px;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 3px;
+    color:#FFFFFF;
+}*/	
+/*End search bar styling*/

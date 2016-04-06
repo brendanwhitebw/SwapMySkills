@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<!-- load firebase and qjuery scripts -->
+    <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--JAVASCRIPT TO CYCLE IMAGES-->
+
+	<script type = "text/javascript">
+
+		
+		function displayFirstImage() {
+            x = (x === images.length) ? 0 : x + 1;
+            document.getElementById("img").src = images[x];
+        }
+		
+		function displayNextImage() {
+            x = (x === images.length - 1) ? 0 : x + 1;
+            document.getElementById("img").src = images[x];
+        }
+
+        function startTimer() {
+			displayFirstImage();
+            setInterval(displayNextImage, 5000);
+        }
+
+        var images = [], x = -1;
+        images[0] = "https://lh3.ggpht.com/lSLM0xhCA1RZOwaQcjhlwmsvaIQYaP3c5qbDKCgLALhydrgExnaSKZdGa8S3YtRuVA=w300";
+        images[1] = "http://seopressor.com/wp-content/uploads/2015/09/how-to-grow-twitter-followers.jpg";
+        images[2] = "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_400x400.png";
+		
+
+    </script>
+	<!--END JAVASCRIPT TO CYCLE IMAGES-->
+	
+
+    <title>SwapMySkills Profile</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="modalworking.css" rel="stylesheet">
+	<link href="PersonalProfile.css" rel="stylesheet">
+  </head>
+  
+  
+  
+  <!---------------------------------------------------->
+  
+  
+  
+  <body onload = "startTimer()">
+  
+	<script>
+		var ref = new Firebase("https://sizzling-inferno-5934.firebaseio.com/");
+		// get logged in user data
+		var authData = ref.getAuth();
+		// find user in database an get details
+		var myDataRef2 = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid);
+		myDataRef2.once("value", function(snapshot) {
+		var data = snapshot.val();
+		if(authData.uid == null){
+			alert("No ID");
+			return;
+		}
+		// pass all user info to function
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
+		});
+	
+		function displayUserDetails(fname, lname, email, county, telephone, town, userdescription, skills) {
+			// fill page with user details from database
+			$('#profileName span').text(fname + ' ' + lname);
+			$('#displayLocation span').text(town + ', ' + county);
+			$('#displayEmail span').text(email);
+			$('#displayTelephone span').text(telephone);
+			$('#displaySkill span').text(skills);
+			$('#profileText').text(userdescription);
+			
+			//fill modal with user details
+			$('#fnameinput').val(fname); 
+			$('#lnameinput').val(lname);
+			$('#countyinput').val(county);	
+			$('#phoneinput').val(telephone);
+			$('#towninput').val(town);
+			$('#userdetailinput').val(userdescription);
+			$('#skillsinput').val(skills);
+		}
+		// reference logged in users listings 
+		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/listings');
+		listingsRef.once("value", function(snapshot){
+		    // for each ad name display and loop
+			snapshot.forEach(function(snapshot2){
+				var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				// add each listing to div with id = r1
+				$("#r1").append(ad);
+			});
+		});
+		
+		// when view listing button is pressed
+		function SaveInfo(userId, advert, adDescription,adDate){
+				// stores all choosen ad details so viewlisting page can display correct ad details
+				sessionStorage.setItem('viewListingAd', advert);
+				sessionStorage.setItem('viewListingUser', userId); 
+				sessionStorage.setItem('viewListingDesc', adDescription);
+				sessionStorage.setItem('viewListingDate', adDate);
+				location.href='ViewListingV2.html';
+		}
+		
+			// when edit profile modal button is pressed
+		function Edit(){
+			var userKey = authData.uid;
+			
+			// update logged in user details to database
+			ref.child("users").child(userKey).update(
+				{
+					"fname": $('#fnameinput').val(),
+					"lname": $('#lnameinput').val(),
+					"skills": $('#skillsinput').val(),
+					"county": $('#countyinput').val(),	
+					"telephone": $('#phoneinput').val(),
+					"town": $('#towninput').val(),
+					"userdescription": $('#userdetailinput').val()
+				}
+			);
+			// get new details of user 
+		myDataRef2.once("value", function(snapshot) {
+		var data = snapshot.val();
+		if(authData.uid == null){
+			alert("No ID");
+			return;
+		}
+		//pass info to fuction to display new data
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
+		});
+
+		}
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
+		function ArtsAndCrafts(){
+			sessionStorage.setItem('label', 'Arts and Crafts');
+		}
+		function Coding(){
+			sessionStorage.setItem('label', 'Coding');
+		}
+		function Cooking(){
+			sessionStorage.setItem('label', 'Cooking');
+		}
+		function Construction(){
+			sessionStorage.setItem('label', 'Construction');
+		}
+		function Carpentry(){
+			sessionStorage.setItem('label', 'Carpentry');
+		}
+		function Farming(){
+			sessionStorage.setItem('label', 'Farming');
+		}
+		function Languages(){
+			sessionStorage.setItem('label', 'Languages');
+		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
+		}
+		function Mechanics(){
+			sessionStorage.setItem('label', 'Mechanics');
+		}
+		function Painting(){
+			sessionStorage.setItem('label', 'Painting');
+		}
+		function Sports(){
+			sessionStorage.setItem('label', 'Sports');
+		}
+		function WebDesign(){
+			sessionStorage.setItem('label', 'Web Design');
+		}
+		function Other(){
+			sessionStorage.setItem('label', 'Other');
+		}
+		
+		// when add listing button is pressed go to create listing page
+		function AddListing(){
+			location.href = "Create Listing.html";
+		}
+	</script>
+  
+	<!--FIXED MAIN NAVBAR-->
+  
+	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+			<!--MOBILE AND TABLET MENU ICON-->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<!--END MOBILE AND TABLET MENU ICON-->
+				<a class="navbar-brand" href="#">SwapMySkills</a>
+					<!--test-->
+			</div>
+			<div class="navbar-collapse collapse">
+				<!--NAVIGATION LINKS-->
+				<ul class="nav navbar-nav navbar-center">
+					<li><a href="HomePageV2.html">Home</a></li>
+					<li><a href="#">About</a></li>
+					<!--SAMPLE DROPDOWN-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Admin & Dashboard</li>
+							<li><a href="#">Admin 1</a></li>
+							<li><a href="#">Admin 2</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Portfolio</li>
+							<li><a href="#">Portfolio 1</a></li>
+							<li><a href="#">Portfolio 2</a></li>
+						</ul>
+					</li>
+					<!--END SAMPLE DROPDOWN-->
+					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+				</ul>
+				<!--NAVIGATION LINKS-->
+				<!--SEARCH BAR-->
+				<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+							<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+							<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+							<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+							<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+						</ul>
+					</li>
+					<!--<div class="row">
+						<div id="custom-search-input">
+							<div class="input-group">
+								<input type="text" class="  search-query form-control" placeholder="Search" />
+								<span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+								</button></span>
+							</div>
+						</div>
+					</div>-->
+				</ul>
+				<!--END SEARCHBAR-->
+			</div>
+		</div>
+	</div>
+	<!--END MAIN NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+		
+		
+		
+	<!--USER PROFILE-->	
+	<div class="container" id="completeProfile">
+		<!--SIDEBAR-->
+		<div class="col-md-3">
+		<div id="profileSidebar">
+
+			<!--PROFILE PIC-->
+			<div>
+				<img class="img-rounded" src="http://addicted2success.com/wp-content/uploads/2012/12/Jack-Dorsey-Founder-Of-Twitter.jpg"  alt="Profile image" id="profilePic">
+			</div>
+			<!--END PROFILE PIC-->
+
+			<!--USER NAME AND JOB TITLE-->
+			<div id="profileTitle">
+				<div id="profileName">
+					<span>  </span>
+				</div>
+				<div id="profileJob">
+					...
+				</div>
+			</div>
+			<!--END USER NAME AND JOB TITLE-->
+					
+			<!--UPDATE PROFILE PIC BUTTON-->
+			<div id="profileChangePic">
+				<button type="button" class="btn btn-success">Update Profile Picture</button>
+			</div>
+			<!--END UPDATE PROFILE PIC BUTTON-->
+				
+			<!--BASIC INFO-->
+			<div id="profileBasicInfo">
+				<ul>
+					<li id="displaySkill" >
+						<b>Skills:</b> <span></span>
+					</li>
+					<li id="displayLocation">
+						<b>Location:</b> <span></span>
+					</li>
+					<li id="displayEmail">
+						<b>E-mail:</b> <span></span>
+					</li>
+					<li id="displayTelephone">
+						<b>Telephone:</b> <span></span>
+					</li>
+				</ul>
+			</div>
+			<!--END BASIC INFO-->
+				<!-- test -->
+			<center>
+			<!--UPLOAD IMAGE BUTTON-->
+			<div id="profileUploadImage">
+				<button type="button" class="btn btn-success">Upload Image</button>
+			</div>
+			<!--END UPLOAD IMAGE BUTTON-->
+			
+			<!--EDIT INFO BUTTON-->
+			<div id="profileEdit">
+				<button type="button" class="btn btn-success" a href="#edit" data-toggle="modal"></a>Edit Profile</button>
+			</div>
+			<!--END EDIT INFO BUTTON-->
+			</center>
+			
+			<!--COMMENTS SECTION-->
+			
+			<div class="page-header" id="commentsHeader">
+                <h3>Comments and Feedback</h3>
+            </div> 
+			<!--LIST OF COMMENTS-->
+            <div id="commentsList">
+                <div class="media">
+                    <p class="pull-right"><small>1 day ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/1/">
+                    <div class="media-body">  
+                        <h4 class="media-heading userName">User 1</h4>
+                        This is a short comment.
+                    </div>
+                </div>
+                <div class="media">
+					<p class="pull-right"><small>3 days ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/2/">
+                    <div class="media-body">            
+                        <h4 class="media-heading userName">User 2</h4>
+                        This is a longer comment than the last comment. This will help to test the responsive nature of the page and make sure that everything is scaling correctly.
+                    </div>
+                </div>
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/3/">
+                    <div class="media-body">                             
+                        <h4 class="media-heading userName">User 3</h4>
+                        This is the longest comment of all.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
+                    </div>
+                </div>
+            </div>
+			<!--END LIST OF COMMENTS-->
+			
+			<!--COMMENT BUTTON-->
+			<center>
+			<div class="profile-comment" id="commentButton">
+				<button type="button" class="btn btn-success">Comment</button>
+			</div>
+			</center>
+			<!--END COMMENT BUTTON-->
+		<!--END COMMENTS SECTION-->
+		</div>
+		</div>
+		<!--END SIDEBAR-->	
+					
+		<!--MAINBODY AND GRID-->			
+		<div class="col-md-9"> 
+		<div id="largeDiv">
+			<!--PROFILE TEXT-->
+			<div id="profileText" placeholder="Tell us about yourself...">
+				
+			</div>
+			<!--PROFILE TEXT-->
+			
+			<!--USER UPLOADED IMAGES-->
+			<div id="images">
+				<img id="img" class="img-responsive" src="startpicture.jpg"/>
+			</div>
+			<!--END USER UPLOADED IMAGES-->
+
+			<!--USER LISTINGS-->
+			<div class="container-fluid" id="profilegrid">
+				<div id="r1" class="row">
+
+					<!--<div class="col-md-4">
+						<a href="#">
+						<img class="img-rounded" src="img/chef.jpg" alt="chef">
+						</a>
+						<h3>Listing 2</h3>
+						<p>This is a listing posted by this user</p>
+						<a href="#" class="btn btn-danger">View Listing</a>
+					</div>-->
+
+				</div>
+			</div>
+			<!--END USER LISTINGS-->
+			
+			<!--ADD A LISTING BUTTON-->
+			<div id="profileAddListing">
+				<button type="button" onclick="AddListing()" class="btn btn-success">Add A Listing</button>
+			</div>
+			<!--END ADD A LISTING BUTTON-->
+			
+		</div>
+		</div>
+		<!--END MAIN BODY AND GRID-->
+	</div>
+	<!--END USER PROFILE-->
+
+	
+	
+	<!---------------------------------------------------->
+	
+	
+	
+	<!-- FIXED FOOTER NAVBAR -->
+		
+		
+	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<div class="container">
+			<div class="navbar-text pull-left" id="footerText">
+				<p>2016 Software Project</p>
+			</div>
+			<div class="navbar-text pull-right">
+				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+			</div>
+		</div>
+	</div>
+	<!--END FIXED FOOTER NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+		
+		
+	<!--CONTACT MODAL-->
+	<div class="modal fade" id="contact" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Contact</h4>
+				</div>
+				<div class="modal-body">
+					<p>For general inquiries please email ___@______.__</p>
+				</div>
+				<div class="modal-footer">	<!-- Button to close modal -->
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--END CONTACT MODAL-->
+	
+		<!--EDIT PROFILE-->
+	<div class="modal fade" id="edit" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Edit Profile</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group has-feedback">	<!--NAME-->
+						<label class="control-label" for="namelabel">First name</label>
+						<input type="text" class="form-control" id="fnameinput" aria-describedby="nameinput" required="" maxlength="25">
+					</div>
+					
+					<div class="form-group has-feedback">	<!--NAME-->
+						<label class="control-label" for="namelabel">Last name</label>
+						<input type="text" class="form-control" id="lnameinput" aria-describedby="nameinput" required="" maxlength="25">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--SKILLS-->
+						<label class="control-label" for="skillslabel">Skills</label>
+						<input type="text" class="form-control" id="skillsinput" aria-describedby="skillsinput" required="" maxlength="200">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--TOWN-->
+						<label class="control-label" for="locationlabel">Town</label>
+						<input type="text" class="form-control" id="towninput" aria-describedby="towninput" required="" maxlength="30">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--COUNTY-->
+						<label class="control-label" for="locationlabel">County</label>
+						<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" required="" maxlength="20">
+					</div>
+						
+					<div class="form-group has-feedback">	<!--Telephone-->
+						<label class="control-label" for="phonelabel">Telephone</label>
+						<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
+					</div>
+					
+					<center>
+					<label class="control-label" for="userdetaillabel">Detailed Description</label>
+					<div class="form-group has-feedback">	<!--DETAILED DESCRIPTION-->
+						<textarea rows="4" cols="80" id="userdetailinput" aria-describedby="userdetailinput" required="" maxlength="1000"></textarea>
+					</div>
+					
+					<!--SUBMIT BUTTON-->
+					<div class="form-group">
+						<button type="button" class="btn btn-success" onclick="Edit()" data-dismiss="modal">SUBMIT CHANGES</button>
+					</div>
+					<!--END SUBMIT BUTTON-->
+					</center>
+				</div>
+				<div class="modal-footer">	<!-- Button to close modal -->
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--EDIT PROFILE MODAL-->
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	
+  </body>
+</html>

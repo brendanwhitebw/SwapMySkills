@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<!--JAVASCRIPT TO CYCLE IMAGES-->
+	<script type = "text/javascript">
+		
+		function displayFirstImage() {
+            x = (x === images.length) ? 0 : x + 1;
+            document.getElementById("img").src = images[x];
+        }
+		
+		function displayNextImage() {
+            x = (x === images.length - 1) ? 0 : x + 1;
+            document.getElementById("img").src = images[x];
+        }
+
+        function startTimer() {
+			displayFirstImage();
+            setInterval(displayNextImage, 5000);
+        }
+
+        var images = [], x = -1;
+        images[0] = "https://lh3.ggpht.com/lSLM0xhCA1RZOwaQcjhlwmsvaIQYaP3c5qbDKCgLALhydrgExnaSKZdGa8S3YtRuVA=w300";
+        images[1] = "http://seopressor.com/wp-content/uploads/2015/09/how-to-grow-twitter-followers.jpg";
+        images[2] = "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_400x400.png";
+    </script>
+	<!--END JAVASCRIPT TO CYCLE IMAGES-->
+		
+
+    <title>SwapMySkills Profile</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="modalworking.css" rel="stylesheet">
+	<link href="ProfileV3.css" rel="stylesheet">
+  </head>
+  
+  
+  
+  <!---------------------------------------------------->
+  
+  
+  
+  <body onload = "startTimer()">
+	<script>
+		// get the user id of whichever user was clicked to get to this page
+		var selectedUser = sessionStorage.getItem('profilePageUser');
+		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+		// get snapshot of the users details
+		ref.once("value", function(snapshot) {
+			var data = snapshot.val();
+			// pass details to display function
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.skills, data.userdescription);
+		});
+
+		function displayUserDetails(fname, lname, email, county, telephone, town, skills, userdescription) {
+		// display users details
+			$('#DisplayLoc span').text(town + "," + county);
+			$('#profileName').text(fname + " " + lname);
+			$('#DisplayNo span').text(telephone);
+			$('#DisplayEmail span').text(email);
+			$('#displaySkill span').text(skills);
+			$('#profileText').text(userdescription);
+		}
+		// get selected user listings ref
+		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser + '/listings');
+		listingsRef.once("value", function(snapshot){
+		    // for each ad name display and loop
+			snapshot.forEach(function(snapshot2){
+			// get user reference so user id can be passed to view listing page if clicked
+				var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+				userRef.once("value", function(userSnapshot){
+					// render all listings on this account
+					var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+					// add each listing to div with id = r1
+					$("#r1").append(ad);
+				});
+			});
+		});
+		
+		// when view listing button is pressed
+		function SaveInfo(userId, advert, adDescription,adDate){
+			// check if user is logged in
+			var authData = ref.getAuth();
+			if(authData == null){
+				alert("You must be logged in to view listing details");
+			}else{
+			// stores all choosen ad details so viewlisting page can display correct ad details
+			sessionStorage.setItem('viewListingAd', advert);
+			sessionStorage.setItem('viewListingUser', userId); 
+			sessionStorage.setItem('viewListingDesc', adDescription);
+			sessionStorage.setItem('viewListingDate', adDate);
+			location.href='ViewListingV2.html';
+			}
+		}
+
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
+		function ArtsAndCrafts(){
+			sessionStorage.setItem('label', 'Arts and Crafts');
+		}
+		function Coding(){
+			sessionStorage.setItem('label', 'Coding');
+		}
+		function Cooking(){
+			sessionStorage.setItem('label', 'Cooking');
+		}
+		function Construction(){
+			sessionStorage.setItem('label', 'Construction');
+		}
+		function Carpentry(){
+			sessionStorage.setItem('label', 'Carpentry');
+		}
+		function Farming(){
+			sessionStorage.setItem('label', 'Farming');
+		}
+		function Languages(){
+			sessionStorage.setItem('label', 'Languages');
+		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
+		}
+		function Mechanics(){
+			sessionStorage.setItem('label', 'Mechanics');
+		}
+		function Painting(){
+			sessionStorage.setItem('label', 'Painting');
+		}
+		function Sports(){
+			sessionStorage.setItem('label', 'Sports');
+		}
+		function WebDesign(){
+			sessionStorage.setItem('label', 'Web Design');
+		}
+		function Other(){
+			sessionStorage.setItem('label', 'Other');
+		}
+	</script>
+	<!--FIXED MAIN NAVBAR-->
+  
+	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+			<!--MOBILE AND TABLET MENU ICON-->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<!--END MOBILE AND TABLET MENU ICON-->
+				<a class="navbar-brand" href="#">SwapMySkills</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<!--NAVIGATION LINKS-->
+				<ul class="nav navbar-nav navbar-center">
+					<li><a href="HomePageV2.html">Home</a></li>
+					<li><a href="#">About</a></li>
+					<!--SAMPLE DROPDOWN-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Admin & Dashboard</li>
+							<li><a href="#">Admin 1</a></li>
+							<li><a href="#">Admin 2</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Portfolio</li>
+							<li><a href="#">Portfolio 1</a></li>
+							<li><a href="#">Portfolio 2</a></li>
+						</ul>
+					</li>
+					<!--END SAMPLE DROPDOWN-->
+					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+				</ul>
+				<!--NAVIGATION LINKS-->
+				<!--SEARCH BAR-->
+				<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+							<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+							<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+							<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+							<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+						</ul>
+					</li>
+					<!--<div class="row">
+						<div id="custom-search-input">
+							<div class="input-group">
+								<input type="text" class="  search-query form-control" placeholder="Search" />
+								<span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+								</button></span>
+							</div>
+						</div>
+					</div>-->
+				</ul>
+				<!--END SEARCHBAR-->
+			</div>
+		</div>
+	</div>
+	<!--END MAIN NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+		
+		
+		
+	<!--USER PROFILE-->	
+	<div class="container" id="completeProfile">
+		<!--SIDEBAR-->
+		<div class="col-md-3">
+<div		id="profileSidebar">
+
+			<!--PROFILE PIC-->
+			<div>
+				<img class="img-rounded" src="http://addicted2success.com/wp-content/uploads/2012/12/Jack-Dorsey-Founder-Of-Twitter.jpg"  alt="Profile image" id="profilePic">
+			</div>
+			<!--END PROFILE PIC-->
+
+			<!--USER NAME AND JOB TITLE-->
+			<div id="profileTitle">
+				<div >
+					<h4 id="profileName"></h4>
+				</div>
+				<div id="profileJob">
+					...
+				</div>
+			</div>
+			<!--END USER NAME AND JOB TITLE-->
+					
+			<!--CONTACT BUTTON-->
+			<div id="profileContact">
+				<button type="button" class="btn btn-success">Contact</button>
+			</div>
+			<!--END CONTACT BUTTON-->
+				
+			<!--BASIC INFO-->
+			<div id="profileBasicInfo">
+				<ul>
+					<li id="DisplaySkills">
+						<b>Skills:</b> <span></span>
+					</li>
+					<li id="DisplayLoc">
+						<b>Location:</b> <span></span>
+					</li>
+					<li id="DisplayEmail">
+						<b>E-mail:</b> <span></span>
+					</li>
+					<li id="DisplayNo">
+						<b>Telephone:</b> <span></span>
+					</li>
+				</ul>
+			</div>
+			<!--END BASIC INFO-->
+			
+			<div id="profileReport">
+				<button type="button" class="btn btn-danger">Report User</button>
+			</div>
+			
+			<!--COMMENTS SECTION-->
+			
+			<div class="page-header" id="commentsHeader">
+                <h3>Comments and Feedback</h3>
+            </div> 
+				<!--LIST OF COMMENTS-->
+            <div id="commentsList">
+                <div class="media">
+                    <p class="pull-right"><small>1 day ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/1/">
+                    <div class="media-body">  
+                        <h4 class="media-heading userName">User 1</h4>
+                        This is a short comment.
+                    </div>
+                </div>
+                <div class="media">
+					<p class="pull-right"><small>3 days ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/2/">
+                    <div class="media-body">            
+                        <h4 class="media-heading userName">User 2</h4>
+                        This is a longer comment than the last comment. This will help to test the responsive nature of the page and make sure that everything is scaling correctly.
+                    </div>
+                </div>
+                <div class="media">
+                    <p class="pull-right"><small>5 days ago</small></p>
+                    <img src="http://lorempixel.com/40/40/people/3/">
+                    <div class="media-body">                             
+                        <h4 class="media-heading userName">User 3</h4>
+                        This is the longest comment of all.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
+                    </div>
+                </div>
+            </div>
+				<!--END LIST OF COMMENTS-->
+			
+				<!--COMMENT BUTTON-->
+			<center>
+			<div class="profile-comment" id="commentButton">
+				<button type="button" class="btn btn-success">Comment</button>
+			</div>
+			</center>
+				<!--END COMMENT BUTTON-->
+			<!--END COMMENTS SECTION-->
+		</div>
+		</div>
+		<!--END SIDEBAR-->	
+					
+		<!--MAINBODY AND GRID-->			
+		<div class="col-md-9"> 
+		<div id="largeDiv">
+			<!--PROFILE TEXT-->
+			<div id="profileText">
+				No Description...
+			</div>
+			<!--PROFILE TEXT-->
+			<!--USER UPLOADED IMAGES-->
+			<div id="images">
+				<img id="img" class="img-responsive" src="startpicture.jpg"/>
+			</div>
+			<!--END USER UPLOADED IMAGES-->
+			<!--USER LISTINGS-->
+			<div class="container-fluid" id="profilegrid">
+				<div id="r1" class="row">
+
+				</div>
+			</div>
+			<!--END USER LISTINGS-->
+		</div>
+		</div>
+		<!--END MAIN BODY AND GRID-->
+	</div>
+	<!--END USER PROFILE-->
+
+	
+	
+	<!---------------------------------------------------->
+	
+	
+	
+	<!-- FIXED FOOTER NAVBAR -->
+		
+		
+	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<div class="container">
+			<div class="navbar-text pull-left" id="footerText">
+				<p>2016 Software Project</p>
+			</div>
+			<div class="navbar-text pull-right">
+				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+			</div>
+		</div>
+	</div>
+	<!--END FIXED FOOTER NAVBAR-->
+		
+		
+		
+	<!---------------------------------------------------->	
+		
+		
+		
+	<!--CONTACT MODAL-->
+	<div class="modal fade" id="contact" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Contact</h4>
+				</div>
+				<div class="modal-body">
+					<p>For general inquiries please email ___@______.__</p>
+				</div>
+				<div class="modal-footer">	<!-- Button to close modal -->
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--END CONTACT MODAL-->
+		
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	
+  </body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<!--firebase-->
+	
+	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SwapMySkills</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="modalworking.css" rel="stylesheet">
+  </head>
+  <body>
+
+  	<script>
+
+		  var i =0, j=0;
+		  // fill array
+		  for (var k = 0, ar = []; k <= 12; k++) {
+			ar[k] = k;
+		  }
+
+		  // randomize the array
+		  ar.sort(function () {
+			  return Math.random() - 0.5;
+		  });
+		// loop for each listing
+		while(i<6){
+			// use random number from array to select an ad skill to display
+			// this way ads will not repeat
+			switch (ar.pop()) {
+				case 0:
+				selectedSkill = 'Arts and Crafts';
+				break;
+				case 1: 
+				selectedSkill = 'Coding';
+				break;
+				case 2:
+				selectedSkill = 'Cooking';
+				break;
+				case 3: 
+				selectedSkill = 'Construction';
+				break;
+				case 4:
+				selectedSkill = 'Carpentry';
+				break;
+				case 5: 
+				selectedSkill = 'Farming';
+				break;
+				case 6:
+				selectedSkill = 'Languages';
+				break;
+				case 7: 
+				selectedSkill = 'Mechanics';
+				break;
+				case 8:
+				selectedSkill = 'Painting';
+				break;
+				case 9: 
+				selectedSkill = 'Sports';
+				break;
+				case 10:
+				selectedSkill = 'Web Design';
+				break;
+				case 11: 
+				selectedSkill = 'Other';
+				break;
+				case 12: 
+				selectedSkill = 'Music';
+				break;
+			}
+			// reference firebase for random skill
+			var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
+			// take snapshot of ad names in selected skill
+			ref.on("child_added", function(snapshot){
+			    // generate each listing with info for the last added ad in the selected skill
+				var ad = $('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				// only display six istings (have to do it this way because of callbacks) after div id = r1 
+				if(j<6){
+				$("#r1").append(ad);
+				}
+				j++;
+			});
+			i++;
+		}
+		
+		// when view listing button is pressed
+		function SaveInfo(userId, advert, adDescription,adDate){
+			// check if user is logged in
+			var authData = ref.getAuth();
+			if(authData == null){
+				alert("You must be logged in to view listing details");
+			}else{
+				// stores all choosen ad details so viewlisting page can display correct ad details
+				sessionStorage.setItem('viewListingAd', advert);
+				sessionStorage.setItem('viewListingUser', userId); 
+				sessionStorage.setItem('viewListingDesc', adDescription);
+				sessionStorage.setItem('viewListingDate', adDate);
+				location.href='ViewListingV2.html';
+			}
+		}
+		
+		var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
+		 
+		function submit(){
+		//check if passwords match before creating user
+		if($('#passwordinput').val() == $('#re-enterpasswordinput').val()){
+			// check no fields are empty
+			if($('#firstnameinput').val()!= "" && $('#lastnameinput').val() != "" && $('#phoneinput').val() != ""){
+				// create account with username and password
+				myDataRef.createUser({
+				  email    : $('#emailinput').val(),
+				  password : $('#passwordinput').val()
+				}, function(error, userData) {
+				  if (error) {
+					alert(error);
+				  } else {
+				  // generated user authentication key used as primary key
+				  var userKey = userData.uid;
+					
+				  // add user details to database
+				  myDataRef.child("users").child(userKey).set(
+							{
+							email: $('#emailinput').val(),
+							fname: $('#firstnameinput').val(), 
+							lname: $('#lastnameinput').val(),
+							county: $('#countyinput').val(),	
+							telephone: $('#phoneinput').val(),
+							town: $('#towninput').val(),
+							userdescription: "",
+							skills: ""
+							}
+						);
+						alert("Successfully created user account");
+
+						// clear fields when user account created
+						$('#emailinput').val("");
+						$('#firstnameinput').val("");
+						$('#lastnameinput').val("");
+						$('#countyinput').val("");
+						$('#phoneinput').val("");
+						$('#towninput').val("");
+						$('#re-enterpasswordinput').val("");
+						$('#passwordinput').val("");
+				  }
+				});
+			}
+			else{
+				alert("Please fill in *required fields");
+			}
+							
+		}else{
+			alert("Passwords do not match");
+		}
+		  return;
+    }
+		
+		function login(){
+
+			// log in with email and password
+			myDataRef.authWithPassword({
+			  email    : $('#inputSuccess2').val(),
+			  password : $('#inputSuccess3').val()
+			}, function(error, authData) {
+			  if (error) {
+			  alert(error);
+			  } else {
+			  // hide/ show proflie an login buttons
+			  $('#inputSuccess2').val("");
+			  $('#inputSuccess3').val("");
+			  $('#loginbtn').hide();
+			  $('#signupbtn').hide();
+			  
+			  $('#viewprofile').show();
+			  $('#logoutbtn').show();
+			  alert("user logged in");
+			  }},{  remember: "sessionOnly"
+			});
+			}
+		
+		
+		function GoToProfile(){
+			location.href = "PersonalProfile.html";
+		}
+		
+		function Logout(){
+		// log out user
+		   myDataRef.unauth();
+			var auth = myDataRef.getAuth();
+			if (auth) {
+				alert("error logging user out")
+			  }else{
+				alert("user logged out");
+			  }
+			  // hide/show buttons
+			  $('#loginbtn').show();
+			  $('#signupbtn').show();
+			  $('#viewprofile').hide();
+			  $('#logoutbtn').hide();
+		}
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
+		function ArtsAndCrafts(){
+			sessionStorage.setItem('label', 'Arts and Crafts');
+		}
+		function Coding(){
+			sessionStorage.setItem('label', 'Coding');
+		}
+		function Cooking(){
+			sessionStorage.setItem('label', 'Cooking');
+		}
+		function Construction(){
+			sessionStorage.setItem('label', 'Construction');
+		}
+		function Carpentry(){
+			sessionStorage.setItem('label', 'Carpentry');
+		}
+		function Farming(){
+			sessionStorage.setItem('label', 'Farming');
+		}
+		function Languages(){
+			sessionStorage.setItem('label', 'Languages');
+		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
+		}
+		function Mechanics(){
+			sessionStorage.setItem('label', 'Mechanics');
+		}
+		function Painting(){
+			sessionStorage.setItem('label', 'Painting');
+		}
+		function Sports(){
+			sessionStorage.setItem('label', 'Sports');
+		}
+		function WebDesign(){
+			sessionStorage.setItem('label', 'Web Design');
+		}
+		function Other(){
+			sessionStorage.setItem('label', 'Other');
+		}
+		
+	</script>
+  
+  
+	<!--FIXED MAIN NAVBAR-->
+  
+	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+			<!--MOBILE AND TABLET MENU ICON-->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" id="toggleButton">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<!--END MOBILE AND TABLET MENU ICON-->
+				<a class="navbar-brand" href="#">SwapMySkills</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<!--NAVIGATION LINKS-->
+				<ul class="nav navbar-nav navbar-center">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<!--SAMPLE DROPDOWN-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Admin & Dashboard</li>
+							<li><a href="#">Admin 1</a></li>
+							<li><a href="#">Admin 2</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Portfolio</li>
+							<li><a href="#">Portfolio 1</a></li>
+							<li><a href="#">Portfolio 2</a></li>
+						</ul>
+					</li>
+					<!--END SAMPLE DROPDOWN-->
+					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+				</ul>
+				<!--NAVIGATION LINKS-->
+				<!--SEARCH BAR-->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+							<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+							<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+							<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+							<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+						</ul>
+					</li>
+					<!--<div class="row">
+						<div id="custom-search-input">
+							<div class="input-group">
+								<input type="text" class="  search-query form-control" placeholder="Search" />
+								<span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+								</button></span>
+							</div>
+						</div>
+					</div>-->
+				</ul>
+				<!--END SEARCHBAR-->
+			</div>
+		</div>
+	</div>
+	<!--END MAIN NAVBAR-->
+		
+		
+		<!--JUMBOTRON-->
+		<div class="jumbotron text-center" id="homejumbo">
+			<h1>SwapMySkills</h1>
+			<p>If everyone is moving forward together, then success takes care of itself.</p>
+			<a href="#" id="loginbtn" class="btn btn-primary" data-toggle="modal" data-target="#login">Log In</a>
+			<a href="#" id="signupbtn" class="btn btn-success" data-toggle="modal" data-target="#signup">Sign Up</a>
+			<a href="#" id="viewprofile" class="btn btn-primary" onclick="GoToProfile()">View Profile</a>
+			<a href="#" id="logoutbtn" class="btn btn-success" onclick="Logout()">Log Out</a>
+			<!--<form>
+			<div class="input-group input-group-lg" id="homeSearch">
+			<input type="text" class="form-control" placeholder="SEARCH">
+			</div>
+			</form>-->
+		</div>
+		<!--END JUMBOTRON-->
+			
+			
+		<!--GRID FOR LISTINGS-->
+		<div class="container-fluid" id="homegrid">
+			<div id = "r1" class="row">	<!--ROW 1-->
+				<!--<div class="col-md-4">
+					<a href="#">
+						<img class="img-rounded" src="img/mechanic.jpg" alt="mechanic">
+					</a>
+					<h3>Listing 1</h3>
+					<p class = "p1" >The text brief for the first listing can go here. 
+					The text brief for the first listing can go here. 
+					The text brief for t</p>
+					<a id="but" href="#" class="btn btn-danger">View Listing</a>
+				</div>-->
+				
+			</div>
+		</div>
+		<!--END GRID FOR LISTINGS-->
+		
+		<!--FIXED FOOTER NAVBAR-->
+		<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="container">
+				<div class="navbar-text pull-left" id="footerText">
+					<p>2016 Software Project</p>
+				</div>
+				<div class="navbar-text pull-right">
+					<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+					<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+					<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+				</div>
+			</div>
+		</div>
+		<!--END FIXED FOOTER NAVBAR-->
+		
+		<!--CONTACT MODAL-->
+		<div class="modal fade" id="contact" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--MODAL HEADER-->
+					<div class="modal-header">
+						<h4>Contact</h4>
+					</div>
+					<!--END MODAL HEADER-->
+					<!--MODAL BODY-->
+					<div class="modal-body">
+						<p>For general inquiries please email ___@______.__</p>
+					</div>
+					<!--END MODAL BODY-->
+					<!--MODAL FOOTER-->
+					<div class="modal-footer">	<!-- Button to close modal -->
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					</div>
+					<!--END MODAL FOOTER-->
+				</div>
+			</div>
+		</div>
+		<!--END CONTACT MODAL-->
+	
+		<!-- SIGN UP MODAL -->
+		<div class="modal fade" id="signup" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--MODAL HEADER-->
+					<div class="modal-header">	<!-- Button to close modal -->
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">Sign Up</h4>
+					</div>
+					<!--END MODAL HEADER-->
+					
+					<!--SIGN UP FORM-->
+					<div class="modal-body form-inline">
+				
+						<div class="form-group has-feedback">	<!-- FirstName -->
+							<label class="control-label" for="firstnamelabel">* First name</label>
+							<input type="text" class="form-control" id="firstnameinput" aria-describedby="firstnameinput" required="" maxlength="25">
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- LastName -->
+							<label class="control-label" for="lastnamelabel">* Last name</label>
+							<input type="text" class="form-control" id="lastnameinput" aria-describedby="lastnameinput" required="" maxlength="25">
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- Email -->
+							<label class="control-label" for="emaillabel">* Email address</label>
+							<input type="email" class="form-control" id="emailinput" aria-describedby="emailinput" required="" maxlength="50">
+						</div>
+						
+						<div class="form-group has-feedback">	<!-- Telephone -->
+							<label class="control-label" for="phonelabel">* Telephone</label>
+							<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- Password -->
+							<label class="control-label" for="passwordlabel">* Password</label>
+							<input type="password" class="form-control" id="passwordinput" aria-describedby="passwordinput" required="" maxlength="30">
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- Password Repeat -->
+							<label class="control-label" for="re-enterpasswordlabel">* Re-enter password</label>
+							<input type="password" class="form-control" id="re-enterpasswordinput" aria-describedby="re-enterpasswordinput" required="" maxlength="30">
+						</div>
+						
+						<div class="form-group has-feedback">	<!-- Town -->
+							<label class="control-label" for="townlabel">Town/City</label>
+							<input type="text" class="form-control" id="towninput" aria-describedby="towninput" maxlength="30"> 
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- County -->
+							<label class="control-label" for="countylabel">County</label>
+							<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" maxlength="20">
+						</div>
+						
+						<br/>
+						<!--SUBMIT BUTTON-->
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="submit()" data-dismiss="modal">Sign up</button>
+						</div>
+						<!--END SUBMIT BUTTON->
+						
+						<!--MODAL FOOTER-->
+						<div class="modal-footer">	<!-- Link to Log In modal -->
+						If you are an existing member of this site you can <a data-toggle="modal" data-target="#login" data-dismiss="modal"> log in here</a>
+						</div>
+						<!--END MODAL FOOTER-->
+					</div>
+					<!--END SIGN UP FORM-->
+				</div>
+			</div>
+		</div>	
+		<!--END SIGN UP MODAL-->
+
+		<!--LOG IN MODAL-->
+		<div class="modal fade" id="login" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--MODAL HEADER-->
+					<div class="modal-header">	<!-- Button to close modal -->
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="myModalLabel">Log In</h4>
+					</div>
+					<!--END MODAL HEADER-->
+				
+					<!--MODAL BODY-->
+					<div class="modal-body">
+						<div class="form-group has-feedback">	<!-- Email Address -->
+							<label class="control-label">Email Address</label>
+							<input type="email" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" placeholder="Email">
+						</div>
+                
+						<div class="form-group has-feedback">	<!-- Password -->
+							<label class="control-label">Password</label>
+							<input type="password" class="form-control" id="inputSuccess3" aria-describedby="inputSuccess2Status" placeholder="Password">
+						</div>
+                
+						<button type="button" onclick="login()" class="btn btn-primary" data-dismiss="modal">Login</button>
+						<input type="checkbox" value="rememberme" id="rememberme">Remember me <br/><br/>
+           
+						<a href="#">Forgot your password?</a>
+                
+					</div>
+					<!--END MODAL BODY-->
+              
+					<!--MODAL FOOTER-->
+					<div class="modal-footer">
+						<h4 class="modal-title" id="myModalLabel">Register</h4>	<!-- redirect to sign up -->
+						If you are not an existing member of this site you can <a data-toggle="modal" data-target="#signup" data-dismiss="modal"> register here</a>
+					</div>
+					<!--END MODAL FOOTER-->
+				</div>
+			</div>
+		</div>	
+		<!--END LOG IN MODAL-->
+		<script>
+			var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
+			// check if users logged in an show appropreiate buttons
+			var authData = ref.getAuth();
+			if(authData == null){
+				document.getElementById("viewprofile").style.display = "none";
+				document.getElementById("logoutbtn").style.display = "none";
+			}else{
+				document.getElementById("signupbtn").style.display = "none";
+				document.getElementById("loginbtn").style.display = "none";
+			}
+		</script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+		
+  </body>
+</html>
