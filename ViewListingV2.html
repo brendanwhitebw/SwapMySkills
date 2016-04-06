@@ -36,17 +36,20 @@
   <body>
   
   <script>
+	// html storage varibles passed in from previous page so the page knows what details to display
     var selectedAd = sessionStorage.getItem('viewListingAd');
 	var selectedUser = sessionStorage.getItem('viewListingUser');
 	var selectedDesc = sessionStorage.getItem('viewListingDesc');
 	var selectedDate = sessionStorage.getItem('viewListingDate');
-
+	// get firebase reference to passed in user id
 	var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+	// get data
 	ref.once("value", function(snapshot) {
 		var data = snapshot.val();
+		// pass in user info to function
 		displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone);
 	});
-
+	// display the listing data
 	function displayUserDetails(fname, lname, email, county, telephone) {
 		$('#DisplayLoc span').text(county);
 		$('#ad-title span').text(selectedAd);
@@ -57,7 +60,7 @@
 		$('#DisplayEmail span').text(email);
 	}
 
-	
+	// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
 			sessionStorage.setItem('label', 'Arts and Crafts');
 		}
@@ -78,6 +81,9 @@
 		}
 		function Languages(){
 			sessionStorage.setItem('label', 'Languages');
+		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
 		}
 		function Mechanics(){
 			sessionStorage.setItem('label', 'Mechanics');
@@ -146,6 +152,7 @@
 					<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
 					<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
 					<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+					<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
 					<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
 					<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
 					<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>

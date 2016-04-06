@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  		<!--test-->
+	<!-- load firebase and qjuery scripts -->
     <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+	
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,8 +56,9 @@
   
 	<script>
 		var ref = new Firebase("https://sizzling-inferno-5934.firebaseio.com/");
+		// get logged in user data
 		var authData = ref.getAuth();
-		
+		// find user in database an get details
 		var myDataRef2 = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid);
 		myDataRef2.once("value", function(snapshot) {
 		var data = snapshot.val();
@@ -64,6 +66,7 @@
 			alert("No ID");
 			return;
 		}
+		// pass all user info to function
 			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
 		});
 	
@@ -85,11 +88,32 @@
 			$('#userdetailinput').val(userdescription);
 			$('#skillsinput').val(skills);
 		}
+		// reference logged in users listings 
+		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/listings');
+		listingsRef.once("value", function(snapshot){
+		    // for each ad name display and loop
+			snapshot.forEach(function(snapshot2){
+				var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				// add each listing to div with id = r1
+				$("#r1").append(ad);
+			});
+		});
 		
+		// when view listing button is pressed
+		function SaveInfo(userId, advert, adDescription,adDate){
+				// stores all choosen ad details so viewlisting page can display correct ad details
+				sessionStorage.setItem('viewListingAd', advert);
+				sessionStorage.setItem('viewListingUser', userId); 
+				sessionStorage.setItem('viewListingDesc', adDescription);
+				sessionStorage.setItem('viewListingDate', adDate);
+				location.href='ViewListingV2.html';
+		}
+		
+			// when edit profile modal button is pressed
 		function Edit(){
 			var userKey = authData.uid;
 			
-			// add user details to database
+			// update logged in user details to database
 			ref.child("users").child(userKey).update(
 				{
 					"fname": $('#fnameinput').val(),
@@ -101,18 +125,19 @@
 					"userdescription": $('#userdetailinput').val()
 				}
 			);
-			
+			// get new details of user 
 		myDataRef2.once("value", function(snapshot) {
 		var data = snapshot.val();
 		if(authData.uid == null){
 			alert("No ID");
 			return;
 		}
+		//pass info to fuction to display new data
 			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
 		});
 
 		}
-
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
 			sessionStorage.setItem('label', 'Arts and Crafts');
 		}
@@ -134,6 +159,9 @@
 		function Languages(){
 			sessionStorage.setItem('label', 'Languages');
 		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
+		}
 		function Mechanics(){
 			sessionStorage.setItem('label', 'Mechanics');
 		}
@@ -150,6 +178,7 @@
 			sessionStorage.setItem('label', 'Other');
 		}
 		
+		// when add listing button is pressed go to create listing page
 		function AddListing(){
 			location.href = "Create Listing.html";
 		}
@@ -205,6 +234,7 @@
 							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
 							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
 							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
 							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
 							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
 							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
@@ -359,31 +389,17 @@
 
 			<!--USER LISTINGS-->
 			<div class="container-fluid" id="profilegrid">
-				<div class="row">
-					<div class="col-md-4">
-						<a href="#">
-						<img class="img-rounded" src="img/mechanic.jpg" alt="mechanic">
-						</a>
-						<h3>Listing 1</h3>
-						<p>This is a listing posted by this user</p>
-						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
-					<div class="col-md-4">
+				<div id="r1" class="row">
+
+					<!--<div class="col-md-4">
 						<a href="#">
 						<img class="img-rounded" src="img/chef.jpg" alt="chef">
 						</a>
 						<h3>Listing 2</h3>
 						<p>This is a listing posted by this user</p>
 						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
-					<div class="col-md-4">
-						<a href="#">
-						<img class="img-rounded" src="img/painter.jpg" alt="painter">
-						</a>
-						<h3>Listing 3</h3>
-						<p>This is a listing posted by this user</p>
-						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
+					</div>-->
+
 				</div>
 			</div>
 			<!--END USER LISTINGS-->

@@ -1,3 +1,15 @@
+
+.hid{
+	overflow: hidden;
+	height: 60px;
+
+}
+.p1{
+	overflow: hidden;
+	height: 80px;
+
+}
+
 #completeProfile {/*includes both the sidebar and the largeDiv. Total 12/12*/
 	width:100%;
 }

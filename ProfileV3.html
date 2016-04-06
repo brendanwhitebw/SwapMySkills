@@ -50,14 +50,18 @@
   
   <body onload = "startTimer()">
 	<script>
+		// get the user id of whichever user was clicked to get to this page
 		var selectedUser = sessionStorage.getItem('profilePageUser');
 		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+		// get snapshot of the users details
 		ref.once("value", function(snapshot) {
 			var data = snapshot.val();
+			// pass details to display function
 			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.skills, data.userdescription);
 		});
 
 		function displayUserDetails(fname, lname, email, county, telephone, town, skills, userdescription) {
+		// display users details
 			$('#DisplayLoc span').text(town + "," + county);
 			$('#profileName').text(fname + " " + lname);
 			$('#DisplayNo span').text(telephone);
@@ -65,8 +69,39 @@
 			$('#displaySkill span').text(skills);
 			$('#profileText').text(userdescription);
 		}
+		// get selected user listings ref
+		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser + '/listings');
+		listingsRef.once("value", function(snapshot){
+		    // for each ad name display and loop
+			snapshot.forEach(function(snapshot2){
+			// get user reference so user id can be passed to view listing page if clicked
+				var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser);
+				userRef.once("value", function(userSnapshot){
+					// render all listings on this account
+					var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+					// add each listing to div with id = r1
+					$("#r1").append(ad);
+				});
+			});
+		});
+		
+		// when view listing button is pressed
+		function SaveInfo(userId, advert, adDescription,adDate){
+			// check if user is logged in
+			var authData = ref.getAuth();
+			if(authData == null){
+				alert("You must be logged in to view listing details");
+			}else{
+			// stores all choosen ad details so viewlisting page can display correct ad details
+			sessionStorage.setItem('viewListingAd', advert);
+			sessionStorage.setItem('viewListingUser', userId); 
+			sessionStorage.setItem('viewListingDesc', adDescription);
+			sessionStorage.setItem('viewListingDate', adDate);
+			location.href='ViewListingV2.html';
+			}
+		}
 
-	
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
 			sessionStorage.setItem('label', 'Arts and Crafts');
 		}
@@ -87,6 +122,9 @@
 		}
 		function Languages(){
 			sessionStorage.setItem('label', 'Languages');
+		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
 		}
 		function Mechanics(){
 			sessionStorage.setItem('label', 'Mechanics');
@@ -153,6 +191,7 @@
 							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
 							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
 							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
 							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
 							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
 							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
@@ -295,31 +334,8 @@
 			<!--END USER UPLOADED IMAGES-->
 			<!--USER LISTINGS-->
 			<div class="container-fluid" id="profilegrid">
-				<div class="row">
-					<div class="col-md-4">
-						<a href="#">
-						<img class="img-rounded" src="img/mechanic.jpg" alt="mechanic">
-						</a>
-						<h3>Listing 1</h3>
-						<p>This is a listing posted by this user</p>
-						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
-					<div class="col-md-4">
-						<a href="#">
-						<img class="img-rounded" src="img/chef.jpg" alt="chef">
-						</a>
-						<h3>Listing 2</h3>
-						<p>This is a listing posted by this user</p>
-						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
-					<div class="col-md-4">
-						<a href="#">
-						<img class="img-rounded" src="img/painter.jpg" alt="painter">
-						</a>
-						<h3>Listing 3</h3>
-						<p>This is a listing posted by this user</p>
-						<a href="#" class="btn btn-danger">View Listing</a>
-					</div>
+				<div id="r1" class="row">
+
 				</div>
 			</div>
 			<!--END USER LISTINGS-->

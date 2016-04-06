@@ -29,27 +29,37 @@
   
   <body>
 	<script>
+		// hide until results are ready
 		$(document).ready(function() {
 		  $('body').hide();
 		});
-
+		//count to display number of results
 		var count = 0;
+		// html storage that contains the skill seected from dropdown menu
 		var selectedSkill = sessionStorage.getItem('label');
+		// reference the skill selected from dropdown in firebase 
 		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
-		//ref.limitToLast(20).on("child_added", function(snapshot) {
+		// take snapshot of ad names in selected skill
 		ref.limitToLast(10).once("value", function(snapshot){
+		// for each ad name loop
 			snapshot.forEach(function(snapshot2){
-			    			
+			    // get user number that created listing
 				var user = snapshot2.child("user").val();
+				// reference the user that created the ad in firebase 
 				var ref2 = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + user);
+				// get attruibutes of user
 				ref2.once("value", function(usersnapshot) {
+					// store all user information in data
 					var data = usersnapshot.val();
 					
 					count++;
+					// this creates each ad block with user and ad information
 					var ad = $('<article class="search-result row"><div class="col-xs-12 col-sm-12 col-md-3"><a href="#" title="profile-img" class=""><img src="http://smartcatdesign.net/preview/tyros/wp-content/uploads/2014/12/team1-300x300-300x300-300x300.png" alt="image" /></a></div><div class="col-xs-12 col-sm-12 col-md-2"><ul class="meta-search"><li class = "Date"><i class="glyphicon glyphicon-calendar"></i> <span>' + snapshot2.child("date").val()  + '</span></li><li><i class="glyphicon glyphicon-map-marker"></i> <span>'+ data.county +'</span></li><li><i class="glyphicon glyphicon-tags"></i> <span>'+ selectedSkill +'</span></li></ul></div><div class="col-xs-12 col-sm-12 col-md-7 excerpet"><h3><a href="#" onclick="SaveProfileInfo(\''+ snapshot2.child("user").val() +'\')" title=""> '+ data.fname + ' ' + data.lname +'</a></h3><h3> ' + snapshot2.key() + '</h3><p>'+ snapshot2.child("description").val() +'</p><div class="view-ad" id="viewAdBtn"><a href="#" onclick="SaveInfo(\'' + snapshot2.child("user").val() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-success">View Listing</a></div></div><span class="clearfix borda" id="end1"></span></article> ');
-				
+					// append each ad block onto id = section in html
 					$("section").append(ad);
+					// display number of listings
 					$('#num').text(count);
+					// display choosen skill
 					$('#skillName').text(selectedSkill);
 					
 				});
@@ -58,20 +68,24 @@
 		}); 
 		
 		function SaveProfileInfo(userId){
+			// check if user is logged in
 			var authData = ref.getAuth();
 			if(authData == null){
 				alert("You must be logged in to view user accounts");
 			}else{
+				// save user id assosiated with that ad so it can be referenced in profile page
 				sessionStorage.setItem('profilePageUser', userId);
 				location.href="ProfileV3.html"; 
 			}
 		}
-		
+		// when view listing button is pressed
 		function SaveInfo(userId, advert, adDescription,adDate){
+			// check if user is logged in
 			var authData = ref.getAuth();
 			if(authData == null){
 				alert("You must be logged in to view listing details");
 			}else{
+				// stores all choosen ad details so viewlisting page can display correct ad details
 				sessionStorage.setItem('viewListingAd', advert);
 				sessionStorage.setItem('viewListingUser', userId); 
 				sessionStorage.setItem('viewListingDesc', adDescription);
@@ -79,7 +93,7 @@
 				location.href='ViewListingV2.html';
 			}
 		}
-
+		// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
 			sessionStorage.setItem('label', 'Arts and Crafts');
 		}
@@ -101,6 +115,9 @@
 		function Languages(){
 			sessionStorage.setItem('label', 'Languages');
 		}
+		function Music(){
+			sessionStorage.setItem('label', 'Music');
+		}
 		function Mechanics(){
 			sessionStorage.setItem('label', 'Mechanics');
 		}
@@ -116,7 +133,7 @@
 		function Other(){
 			sessionStorage.setItem('label', 'Other');
 		}
-		
+		// show search results page when finished loading them
     	$(window).load(function() {
 		$("body").show();
 		}); 
@@ -171,6 +188,7 @@
 							<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
 							<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
 							<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+							<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
 							<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
 							<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
 							<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>

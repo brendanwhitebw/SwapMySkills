@@ -10,6 +10,18 @@
     background-color: #d5ffd5;
 }*/
 
+
+#hid{
+	overflow: hidden;
+	height: 30px;
+
+}
+.p1{
+	overflow: hidden;
+	height: 80px;
+
+}
+
 .modal-footer{/*position modal footer text*/
     text-align: left;    
 }
