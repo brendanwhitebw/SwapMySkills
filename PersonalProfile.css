@@ -22,11 +22,11 @@
 	padding-left:0;
 }
 
-#images {/*matches size of the current image on display*/
+/*#comments {
 	width:50%;
 	float:right;
 	margin:auto;
-}
+}*/
 
 #profilegrid {/*grid showing the user's listings*/
 	padding-top:10px;
@@ -43,7 +43,7 @@
 	background: #fff;
 	min-height:400px;
 	border-right: 1px solid black;
-	max-height:200px;
+	max-height:400px;
 	overflow: scroll;
 }
 
@@ -157,11 +157,11 @@ a > img {/*the images for the listings*/
 /*Comment section styling*/
 #commentsHeader{
 	padding-left: 15px;
-	border-top:1px black solid;
+	margin-top:0px;
 }
 
 #commentsList{
-	max-height:200px;
+	max-height:314px;
 	overflow: scroll;
 }
 
@@ -177,11 +177,6 @@ a > img {/*the images for the listings*/
     font-weight: bold;
 }
 
-#commentButton{
-	border-top:1px dotted black;
-	margin-top:20px;
-	padding-top:10px;
-}
 /*End comment section styling*/
 
 /*END LEFT SIDE STYLING*/
