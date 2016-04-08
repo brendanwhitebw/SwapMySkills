@@ -9,7 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 	<!--JAVASCRIPT TO CYCLE IMAGES-->
-	<script type = "text/javascript">
+	<!--<script type = "text/javascript">
 		
 		function displayFirstImage() {
             x = (x === images.length) ? 0 : x + 1;
@@ -30,7 +30,7 @@
         images[0] = "https://lh3.ggpht.com/lSLM0xhCA1RZOwaQcjhlwmsvaIQYaP3c5qbDKCgLALhydrgExnaSKZdGa8S3YtRuVA=w300";
         images[1] = "http://seopressor.com/wp-content/uploads/2015/09/how-to-grow-twitter-followers.jpg";
         images[2] = "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_400x400.png";
-    </script>
+    </script>-->
 	<!--END JAVASCRIPT TO CYCLE IMAGES-->
 		
 
@@ -48,7 +48,7 @@
   
   
   
-  <body onload = "startTimer()">
+  <body>
 	<script>
 		// get the user id of whichever user was clicked to get to this page
 		var selectedUser = sessionStorage.getItem('profilePageUser');
@@ -268,53 +268,11 @@
 				</ul>
 			</div>
 			<!--END BASIC INFO-->
-			
+			<!--REPORT USER BUTTON-->
 			<div id="profileReport">
 				<button type="button" class="btn btn-danger">Report User</button>
 			</div>
-			
-			<!--COMMENTS SECTION-->
-			
-			<div class="page-header" id="commentsHeader">
-                <h3>Comments and Feedback</h3>
-            </div> 
-				<!--LIST OF COMMENTS-->
-            <div id="commentsList">
-                <div class="media">
-                    <p class="pull-right"><small>1 day ago</small></p>
-                    <img src="http://lorempixel.com/40/40/people/1/">
-                    <div class="media-body">  
-                        <h4 class="media-heading userName">User 1</h4>
-                        This is a short comment.
-                    </div>
-                </div>
-                <div class="media">
-					<p class="pull-right"><small>3 days ago</small></p>
-                    <img src="http://lorempixel.com/40/40/people/2/">
-                    <div class="media-body">            
-                        <h4 class="media-heading userName">User 2</h4>
-                        This is a longer comment than the last comment. This will help to test the responsive nature of the page and make sure that everything is scaling correctly.
-                    </div>
-                </div>
-                <div class="media">
-                    <p class="pull-right"><small>5 days ago</small></p>
-                    <img src="http://lorempixel.com/40/40/people/3/">
-                    <div class="media-body">                             
-                        <h4 class="media-heading userName">User 3</h4>
-                        This is the longest comment of all.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-                    </div>
-                </div>
-            </div>
-				<!--END LIST OF COMMENTS-->
-			
-				<!--COMMENT BUTTON-->
-			<center>
-			<div class="profile-comment" id="commentButton">
-				<button type="button" class="btn btn-success">Comment</button>
-			</div>
-			</center>
-				<!--END COMMENT BUTTON-->
-			<!--END COMMENTS SECTION-->
+			<!--END REPORT USER BUTTON-->
 		</div>
 		</div>
 		<!--END SIDEBAR-->	
@@ -327,11 +285,49 @@
 				No Description...
 			</div>
 			<!--PROFILE TEXT-->
-			<!--USER UPLOADED IMAGES-->
-			<div id="images">
-				<img id="img" class="img-responsive" src="startpicture.jpg"/>
+			<!--COMMENTS SECTION-->
+			<div id="comments">
+			<center>
+				<div class="page-header" id="commentsHeader">
+					<h3>Comments and Feedback</h3>
+					<!--COMMENT BUTTON-->
+					<div class="profile-comment" id="commentButton">
+						<button type="button" class="btn btn-success">Comment</button>
+					</div>
+					<!--END COMMENT BUTTON-->
+        			</div>
+			</center>
+			<!--LIST OF COMMENTS-->
+            		<div id="commentsList">
+                		<div class="media">
+                    			<p class="pull-right"><small>1 day ago</small></p>
+                    			<img src="http://lorempixel.com/40/40/people/1/">
+                    			<div class="media-body">  
+                        			<h4 class="media-heading userName">User 1</h4>
+                        			This is a short comment.
+                    			</div>
+                		</div>
+                		<div class="media">
+					<p class="pull-right"><small>3 days ago</small></p>
+                    			<img src="http://lorempixel.com/40/40/people/2/">
+                    			<div class="media-body">            
+                        			<h4 class="media-heading userName">User 2</h4>
+                        			This is a longer comment than the last comment. This will help to test the responsive nature of the page and make sure that everything is scaling correctly.
+                    			</div>
+                		</div>
+                		<div class="media">
+                    			<p class="pull-right"><small>5 days ago</small></p>
+                    			<img src="http://lorempixel.com/40/40/people/3/">
+                    			<div class="media-body">                             
+                        			<h4 class="media-heading userName">User 3</h4>
+                        			This is the longest comment of all.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
+                    			</div>
+                		</div>
+            		</div>
+			<!--END LIST OF COMMENTS-->
+			<!--END COMMENTS SECTION-->
 			</div>
-			<!--END USER UPLOADED IMAGES-->
+
 			<!--USER LISTINGS-->
 			<div class="container-fluid" id="profilegrid">
 				<div id="r1" class="row">
