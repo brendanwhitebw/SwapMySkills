@@ -111,10 +111,16 @@
 			myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
 				{
 				description: $('#ad-desc').val(),
-				date: actualDate
+				date: actualDate,
+				type: $("#section option:selected").text()
 				}
 			)
-			
+			// get reference to users details that posted the ad
+			var time = new Date().getTime();
+			var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid );
+			userRef.once("value", function(userNameSnapshot) {
+				// get snapshot of user to save details
+				data = userNameSnapshot.val();
 			var listRef = myDataRef.child($("#section option:selected").text()); 
 			// this stores ad details under the skill name from dropdown menu and the ad name entered
 			listRef.child($("#ad-title").val()).set( 
@@ -122,13 +128,17 @@
 				description: $('#ad-desc').val(),
 				// logged in users id, defined up the top
 				user: userKey,
-				date: actualDate
+				date: actualDate,
+				name: data.fname + " " + data.lname,
+				timeadded: 10000000000000 - time,
+				county: data.county
 				}
 			)
 			// clears fields 
 			alert("Listing Saved");
 			$('#ad-desc').val("");
 			$("#ad-title").val("");
+			});
 			}
 		});
 

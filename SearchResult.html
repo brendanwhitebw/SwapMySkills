@@ -40,29 +40,19 @@
 		// reference the skill selected from dropdown in firebase 
 		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
 		// take snapshot of ad names in selected skill
-		ref.limitToLast(10).once("value", function(snapshot){
+		ref.limitToLast(10).orderByChild("timeadded").on("value", function(snapshot){
+		$('.search-result row').remove();
 		// for each ad name loop
 			snapshot.forEach(function(snapshot2){
-			    // get user number that created listing
-				var user = snapshot2.child("user").val();
-				// reference the user that created the ad in firebase 
-				var ref2 = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + user);
-				// get attruibutes of user
-				ref2.once("value", function(usersnapshot) {
-					// store all user information in data
-					var data = usersnapshot.val();
-					
-					count++;
-					// this creates each ad block with user and ad information
-					var ad = $('<article class="search-result row"><div class="col-xs-12 col-sm-12 col-md-3"><a href="#" title="profile-img" class=""><img src="http://smartcatdesign.net/preview/tyros/wp-content/uploads/2014/12/team1-300x300-300x300-300x300.png" alt="image" /></a></div><div class="col-xs-12 col-sm-12 col-md-2"><ul class="meta-search"><li class = "Date"><i class="glyphicon glyphicon-calendar"></i> <span>' + snapshot2.child("date").val()  + '</span></li><li><i class="glyphicon glyphicon-map-marker"></i> <span>'+ data.county +'</span></li><li><i class="glyphicon glyphicon-tags"></i> <span>'+ selectedSkill +'</span></li></ul></div><div class="col-xs-12 col-sm-12 col-md-7 excerpet"><h3><a href="#" onclick="SaveProfileInfo(\''+ snapshot2.child("user").val() +'\')" title=""> '+ data.fname + ' ' + data.lname +'</a></h3><h3> ' + snapshot2.key() + '</h3><p>'+ snapshot2.child("description").val() +'</p><div class="view-ad" id="viewAdBtn"><a href="#" onclick="SaveInfo(\'' + snapshot2.child("user").val() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-success">View Listing</a></div></div><span class="clearfix borda" id="end1"></span></article> ');
-					// append each ad block onto id = section in html
-					$("section").append(ad);
-					// display number of listings
-					$('#num').text(count);
-					// display choosen skill
-					$('#skillName').text(selectedSkill);
-					
-				});
+				count++;
+				// this creates each ad block with user and ad information
+				var ad = $('<article class="search-result row"><div class="col-xs-12 col-sm-12 col-md-3"><a href="#" title="profile-img" class=""><img src="http://smartcatdesign.net/preview/tyros/wp-content/uploads/2014/12/team1-300x300-300x300-300x300.png" alt="image" /></a></div><div class="col-xs-12 col-sm-12 col-md-2"><ul class="meta-search"><li class = "Date"><i class="glyphicon glyphicon-calendar"></i> <span>' + snapshot2.child("date").val()  + '</span></li><li><i class="glyphicon glyphicon-map-marker"></i> <span>'+ snapshot2.child("county").val() +'</span></li><li><i class="glyphicon glyphicon-tags"></i> <span>'+ selectedSkill +'</span></li></ul></div><div class="col-xs-12 col-sm-12 col-md-7 excerpet"><h3><a href="#" onclick="SaveProfileInfo(\''+ snapshot2.child("user").val() +'\')" title=""> '+ snapshot2.child("name").val() +'</a></h3><h3> ' + snapshot2.key() + '</h3><p>'+ snapshot2.child("description").val() +'</p><div class="view-ad" id="viewAdBtn"><a href="#" onclick="SaveInfo(\'' + snapshot2.child("user").val() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-success">View Listing</a></div></div><span class="clearfix borda" id="end1"></span></article> ');
+				// append each ad block onto id = section in html
+				$("section").append(ad);
+				// display number of listings
+				$('#num').text(count);
+				// display choosen skill
+				$('#skillName').text(selectedSkill);
 
 			});
 		}); 
@@ -73,10 +63,17 @@
 			if(authData == null){
 				alert("You must be logged in to view user accounts");
 			}else{
-				// save user id assosiated with that ad so it can be referenced in profile page
-				sessionStorage.setItem('profilePageUser', userId);
-				location.href="ProfileV3.html"; 
+				if(authData.uid === userId){
+					// go to personal profile page if logged in user clicks their own name
+					location.href="PersonalProfile.html";
+				}
+				else{
+					// save user id assosiated with that ad so it can be referenced in profile page
+					sessionStorage.setItem('profilePageUser', userId);
+					location.href="ProfileV3.html"; 
+				}
 			}
+
 		}
 		// when view listing button is pressed
 		function SaveInfo(userId, advert, adDescription,adDate){

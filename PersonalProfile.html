@@ -90,14 +90,28 @@
 		}
 		// reference logged in users listings 
 		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/listings');
-		listingsRef.once("value", function(snapshot){
-		    // for each ad name display and loop
+		listingsRef.on("value", function(snapshot){
+		    $('.col-md-4').remove();
+			// for each ad name display and loop
 			snapshot.forEach(function(snapshot2){
-				var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
 				// add each listing to div with id = r1
 				$("#r1").append(ad);
 			});
 		});
+		
+		// when delete ad button is pressed
+		function Del(adName, type){
+			// confirm delete
+			var deleteAd = confirm("Are you sure you want to delete " + adName);
+			if(deleteAd == true){
+				// delete data from firebase
+				var delRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/listings/' + adName);
+				delRef.remove();
+				delRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + type + '/' + adName);
+				delRef.remove();
+			}
+		}	
 		
 		// when view listing button is pressed
 		function SaveInfo(userId, advert, adDescription,adDate){
@@ -135,8 +149,77 @@
 		//pass info to fuction to display new data
 			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
 		});
-
 		}
+		
+		// called every time a comment is added order by latest added	
+		var commentsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/comments');
+		commentsRef.orderByChild("timeadded").on("value", function(commentsSnapshot){
+			// remove comments so the list can repopulate
+			$('.media').remove();
+			// for each time when comments were posted
+			commentsSnapshot.forEach(function(allTimesSnapshot){
+
+					// calculate difference in time from when comment was added
+					var time = new Date().getTime();
+					var timeDiff = Math.abs(time - allTimesSnapshot.key());
+					var diff = Math.floor(timeDiff / (1000 * 60));
+					var ago = "";
+					// this is to display how old comment is in the correct format
+					if(diff != 1){
+							ago = diff + " minutes ago";
+						}
+						else{
+							ago = diff + " minute ago";
+						}
+					if(diff > 59){
+						var diff = Math.floor(timeDiff / (1000 * 60 * 60));
+						if(diff != 1){
+							ago = diff + " hours ago";
+						}
+						else{
+							ago = diff + " hour ago";
+						}
+						if(diff > 23){
+							var diff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+							if(diff != 1){
+								ago = diff + " days ago";
+							}
+							else{
+								ago = diff + " day ago";
+							}
+							if(diff > 6){
+								var diff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 7));
+								if(diff != 1){
+									ago = diff + " weeks ago";
+								}
+								else{
+									ago = diff + " week ago";
+								}
+							}
+							if(diff > 3){
+								var diff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 7 * 30));
+								if(diff != 1){
+									ago = diff + " months ago";
+								}
+								else{
+									ago = diff + " month ago";
+								}
+							}
+						}
+					}
+					// generate each comment with pic, name, comment and how long ago it was posted
+					var com = ('<div class="media"><p class="pull-right"><small>' + ago + '</small></p><img src="http://lorempixel.com/40/40/people/1/"><div class="media-body"><a href="#" onclick="SaveProfileInfo(\''+ allTimesSnapshot.child("user").val() +'\')" title=""> ' + allTimesSnapshot.child("name").val() + '</a><br>' + allTimesSnapshot.child("comment").val()   + '</div></div>');
+					$("#commentsList").append(com);
+				
+			});
+		});
+		
+		function SaveProfileInfo(userId){
+				// save user id assosiated with that ad so it can be referenced in profile page
+				sessionStorage.setItem('profilePageUser', userId);
+				location.href="ProfileV3.html"; 			
+		}
+
 		// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
 			sessionStorage.setItem('label', 'Arts and Crafts');
@@ -311,7 +394,7 @@
 				</ul>
 			</div>
 			<!--END BASIC INFO-->
-				<!-- test -->
+			
 			<center>
 			<!--UPLOAD IMAGE BUTTON-->
 			<div id="profileUploadImage">
@@ -348,30 +431,7 @@
 			</center>
 			<!--LIST OF COMMENTS-->
             		<div id="commentsList">
-                		<div class="media">
-                			<p class="pull-right"><small>1 day ago</small></p>
-                			<img src="http://lorempixel.com/40/40/people/1/">
-                			<div class="media-body">  
-                        			<h4 class="media-heading userName">User 1</h4>
-                        			This is a short comment.
-                    			</div>
-                		</div>
-                		<div class="media">
-					<p class="pull-right"><small>3 days ago</small></p>
-                    			<img src="http://lorempixel.com/40/40/people/2/">
-                    			<div class="media-body">            
-                        			<h4 class="media-heading userName">User 2</h4>
-                        			This is a longer comment than the last comment. This will help to test the responsive nature of the page and make sure that everything is scaling correctly.
-                    			</div>
-                		</div>
-                		<div class="media">
-                    			<p class="pull-right"><small>5 days ago</small></p>
-                    			<img src="http://lorempixel.com/40/40/people/3/">
-                    			<div class="media-body">                             
-                        			<h4 class="media-heading userName">User 3</h4>
-                        			This is the longest comment of all.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec nunc massa. Mauris eleifend a eros et hendrerit. Etiam efficitur tincidunt turpis ut consectetur. Nulla quam risus, laoreet in nisi a, varius rutrum erat. Duis non euismod eros, sed dictum lacus. Phasellus et dignissim ante. Etiam vestibulum, elit convallis euismod consequat, purus massa condimentum sem, sit amet convallis libero tortor nec ipsum. Aliquam consectetur porttitor posuere. Pellentesque dignissim, nibh at luctus ultricies, ligula massa malesuada lacus, nec finibus felis ante in augue. Sed auctor, lectus non mattis tincidunt, metus arcu vehicula arcu, sit amet scelerisque felis eros tristique quam. Nunc accumsan, magna id fringilla interdum, elit arcu blandit lectus, vitae tristique sapien metus in massa. Morbi faucibus urna arcu, non cursus velit accumsan vitae. Nam vestibulum lectus et tortor lacinia bibendum. Quisque nec rutrum nulla. Proin ultrices nisi et urna ullamcorper, sed elementum urna pharetra. 
-                    			</div>
-                		</div>
+					<!-- POPULATED FROM FIREBASE -->
             		</div>
 			<!--END LIST OF COMMENTS-->
 			
@@ -457,9 +517,13 @@
 	<div class="modal fade" id="edit" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h4>Edit Profile</h4>
-				</div>
+					<!--MODAL HEADER-->
+					<div class="modal-header">	<!-- Button to close modal -->
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">Edit Profile</h4>
+					</div>
+					<!--END MODAL HEADER-->
+
 				<div class="modal-body">
 					<div class="form-group has-feedback">	<!--NAME-->
 						<label class="control-label" for="namelabel">First name</label>
@@ -504,13 +568,12 @@
 					<!--END SUBMIT BUTTON-->
 					</center>
 				</div>
-				<div class="modal-footer">	<!-- Button to close modal -->
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-				</div>
+
 			</div>
 		</div>
 	</div>
 	<!--EDIT PROFILE MODAL-->
+	
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
