@@ -146,8 +146,8 @@
 }
 
 #commentsList{
-	max-height:260px;
-	min-height:260px;
+	max-height:265px;
+	min-height:265px;
 	overflow: scroll;
 }
 
