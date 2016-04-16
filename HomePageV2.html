@@ -81,7 +81,7 @@
 			// take snapshot of ad names in selected skill
 			ref.on("child_added", function(snapshot){
 			    // generate each listing with info for the last added ad in the selected skill
-				var ad = $('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				var ad = $('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
 				// only display six istings (have to do it this way because of callbacks) after div id = r1 
 				if(j<6){
 				$("#r1").append(ad);
@@ -264,27 +264,18 @@
 				<a class="navbar-brand" href="#">SwapMySkills</a>
 			</div>
 			<div class="navbar-collapse collapse">
-				<!--NAVIGATION LINKS-->
+			<!--NAVIGATION LINKS-->
 				<ul class="nav navbar-nav navbar-center">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<!--SAMPLE DROPDOWN-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Admin & Dashboard</li>
-							<li><a href="#">Admin 1</a></li>
-							<li><a href="#">Admin 2</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Portfolio</li>
-							<li><a href="#">Portfolio 1</a></li>
-							<li><a href="#">Portfolio 2</a></li>
-						</ul>
-					</li>
-					<!--END SAMPLE DROPDOWN-->
-					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">My Profile</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Terms & Conditions</a></li>
+					<li><a href="#">Sitemap</a></li>
+					<li><a href="#contact" data-toggle="modal">Contact Us</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
 				</ul>
-				<!--NAVIGATION LINKS-->
+				<!--END NAVIGATION LINKS-->
 				<!--SEARCH BAR-->
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
