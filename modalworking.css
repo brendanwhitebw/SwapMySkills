@@ -36,7 +36,7 @@
     margin-right: 10px;
 }
 
-img {/*grid listing images*/
+.img-rounded {/*grid listing images*/
 	max-height:250px;
 	max-width:250px;
 	min-height:250px;
