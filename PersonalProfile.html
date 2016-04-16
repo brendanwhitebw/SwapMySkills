@@ -94,7 +94,7 @@
 		    $('.col-md-4').remove();
 			// for each ad name display and loop
 			snapshot.forEach(function(snapshot2){
-				var ad = ('<div class="col-md-4"><a href="#"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"></a><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
+				var ad = ('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
 				// add each listing to div with id = r1
 				$("#r1").append(ad);
 			});
@@ -287,28 +287,19 @@
 				<!--NAVIGATION LINKS-->
 				<ul class="nav navbar-nav navbar-center">
 					<li><a href="HomePageV2.html">Home</a></li>
-					<li><a href="#">About</a></li>
-					<!--SAMPLE DROPDOWN-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Admin & Dashboard</li>
-							<li><a href="#">Admin 1</a></li>
-							<li><a href="#">Admin 2</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Portfolio</li>
-							<li><a href="#">Portfolio 1</a></li>
-							<li><a href="#">Portfolio 2</a></li>
-						</ul>
-					</li>
-					<!--END SAMPLE DROPDOWN-->
-					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+					<li class="active"><a href="#">My Profile</a></li>
+					<!--<li><a href="#">About Us</a></li>
+					<li><a href="#">Terms & Conditions</a></li>
+					<li><a href="#">Sitemap</a></li>-->
+					<li><a href="#contact" data-toggle="modal">Contact Us</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
 				</ul>
-				<!--NAVIGATION LINKS-->
+				<!--END NAVIGATION LINKS-->
 				<!--SEARCH BAR-->
 				<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
 							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
@@ -477,15 +468,18 @@
 		
 		
 	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-		<div class="container">
-			<div class="navbar-text pull-left" id="footerText">
-				<p>2016 Software Project</p>
+			<div class="navbar-collapse collapse" id="footerText">
+				<ul class="nav navbar-nav navbar-center">
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Terms & Conditions</a></li>
+				<li><a href="#">Sitemap</a></li>
+				</ul>
 			</div>
-			<div class="navbar-text pull-right">
+			<!--<div class="navbar-text pull-right">
 				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
 				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
 				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
-			</div>
+			</div>-->
 		</div>
 	</div>
 	<!--END FIXED FOOTER NAVBAR-->
@@ -558,7 +552,7 @@
 					<center>
 					<label class="control-label" for="userdetaillabel">Detailed Description</label>
 					<div class="form-group has-feedback">	<!--DETAILED DESCRIPTION-->
-						<textarea rows="4" cols="80" id="userdetailinput" aria-describedby="userdetailinput" required="" maxlength="1000"></textarea>
+						<textarea rows="4" cols="80" id="userdetailinput" aria-describedby="userdetailinput" required="" maxlength="3000"></textarea>
 					</div>
 					
 					<!--SUBMIT BUTTON-->
