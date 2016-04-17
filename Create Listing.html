@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  	
-  <!-- firebase -->	
-	<script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
-	<!-- date.js library, this is a script to get meaningful dates back from Date()-->
-	<script src= 'date.js' type="text/javascript"></script>
-	<!-- jQuery script -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+  <!-- firebase --> 
+  <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+  <!-- date.js library, this is a script to get meaningful dates back from Date()-->
+  <script src= 'date.js' type="text/javascript"></script>
+  <!-- jQuery script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,40 +18,30 @@
 /*
 + function($) {
    'use strict';
-
     // UPLOAD CLASS DEFINITION
-
     var dropZone = document.getElementById('drop-zone');
     var uploadForm = document.getElementById('js-upload-form');
-
     var startUpload = function(files) {
         console.log(files)
     }
-
     uploadForm.addEventListener('submit', function(e) {
         var uploadFiles = document.getElementById('js-upload-files').files;
         e.preventDefault()
-
         startUpload(uploadFiles)
     })
-
     dropZone.ondrop = function(e) {
         e.preventDefault();
         this.className = 'upload-drop-zone';
-
         startUpload(e.dataTransfer.files)
     }
-
     dropZone.ondragover = function() {
         this.className = 'upload-drop-zone drop';
         return false;
     }
-
     dropZone.ondragleave = function() {
         this.className = 'upload-drop-zone';
         return false;
     }
-
 }(jQuery);
 */
 </script><!-- end javascript for uploadingn images/ drag and drop-->
@@ -60,137 +50,134 @@
     <title>Create a Listing</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	 <link href="createlisting.css" rel="stylesheet">
-   <link href="modal.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+   <link href="createlisting.css" rel="stylesheet">
+   <link href="modalworking.css" rel="stylesheet">
   
   </head>
   <body>
   
   <script>
-	var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
-	var authData = myDataRef.getAuth();
-	// get logged in users id
-	var userKey = authData.uid;
-	
-	var flag = false;
-	
-	// when store listing button is pressed
-	function StoreListing(){
-	
-	var time = new Date().getTime();
-	var date = new Date(time);
-	// uses Date.js to get current date and time 
-	var actualDate = date.toString("HH:mm dd/MM/yy");
-		// if no skill selected in dropdown do not write to firebase
-		if($("#section option:selected").text() == "Choose a section"){
-			alert("Please fill out all fields and select a skill");
-		}
-		// if not aphla-numeric and white space then do not write to firebase
-		else if (! /^[a-zA-Z0-9\s]+$/.test($("#ad-title").val())) {
-			alert("Please use aphla-numeric characters");
-		}
-		else{
-		flag=false;
-		// gets skill from dropdown menu
-		var selectedSkill = $("#section option:selected").text()
-		var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
-		ref.once("value", function(snapshot){
-			// loops through each ad for selected skill and checks that the ad name entered is not already in firebase, otherwise would be overwritten
-			snapshot.forEach(function(snapshot2){
-				if(snapshot2.key() === $("#ad-title").val()){
-					alert("ad name already takin please change it");
-					// set flag to true so ad data will not be overwritten
-					flag = true;
-				}
-
-			});
-		// if flag is true no data will be written
-		if(flag == false){
-			// this stores ad details in users/userid/listings
-			myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
-				{
-				description: $('#ad-desc').val(),
-				date: actualDate,
-				type: $("#section option:selected").text()
-				}
-			)
-			// get reference to users details that posted the ad
-			var time = new Date().getTime();
-			var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid );
-			userRef.once("value", function(userNameSnapshot) {
-				// get snapshot of user to save details
-				data = userNameSnapshot.val();
-			var listRef = myDataRef.child($("#section option:selected").text()); 
-			// this stores ad details under the skill name from dropdown menu and the ad name entered
-			listRef.child($("#ad-title").val()).set( 
-				{
-				description: $('#ad-desc').val(),
-				// logged in users id, defined up the top
-				user: userKey,
-				date: actualDate,
-				name: data.fname + " " + data.lname,
-				timeadded: 10000000000000 - time,
-				county: data.county
-				}
-			)
-			// clears fields 
-			alert("Listing Saved");
-			$('#ad-desc').val("");
-			$("#ad-title").val("");
-			});
-			}
-		});
-
-		}
-			
-	}
-	// clear fields when reset form is clicked
-	function Clear(){
-		$('#ad-desc').val("");
-		$("#ad-title").val("");
-	}
-
-	// dropdown menu, saves option selected so search results page can display choosen skill ads
-	function ArtsAndCrafts(){
-		sessionStorage.setItem('label', 'Arts and Crafts');
-	}
-	function Coding(){
-		sessionStorage.setItem('label', 'Coding');
-	}
-	function Cooking(){
-		sessionStorage.setItem('label', 'Cooking');
-	}
-	function Construction(){
-		sessionStorage.setItem('label', 'Construction');
-	}
-	function Carpentry(){
-		sessionStorage.setItem('label', 'Carpentry');
-	}
-	function Farming(){
-		sessionStorage.setItem('label', 'Farming');
-	}
-	function Languages(){
-		sessionStorage.setItem('label', 'Languages');
-	}
-	function Music(){
-		sessionStorage.setItem('label', 'Music');
-	}
-	function Mechanics(){
-		sessionStorage.setItem('label', 'Mechanics');
-	}
-	function Painting(){
-		sessionStorage.setItem('label', 'Painting');
-	}
-	function Sports(){
-		sessionStorage.setItem('label', 'Sports');
-	}
-	function WebDesign(){
-		sessionStorage.setItem('label', 'Web Design');
-	}
-	function Other(){
-		sessionStorage.setItem('label', 'Other');
-	}
+  var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
+  var authData = myDataRef.getAuth();
+  // get logged in users id
+  var userKey = authData.uid;
+  
+  var flag = false;
+  
+  // when store listing button is pressed
+  function StoreListing(){
+  
+  var time = new Date().getTime();
+  var date = new Date(time);
+  // uses Date.js to get current date and time 
+  var actualDate = date.toString("HH:mm dd/MM/yy");
+    // if no skill selected in dropdown do not write to firebase
+    if($("#section option:selected").text() == "Choose a section"){
+      alert("Please fill out all fields and select a skill");
+    }
+    // if not aphla-numeric and white space then do not write to firebase
+    else if (! /^[a-zA-Z0-9\s]+$/.test($("#ad-title").val())) {
+      alert("Please use aphla-numeric characters");
+    }
+    else{
+    flag=false;
+    // gets skill from dropdown menu
+    var selectedSkill = $("#section option:selected").text()
+    var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
+    ref.once("value", function(snapshot){
+      // loops through each ad for selected skill and checks that the ad name entered is not already in firebase, otherwise would be overwritten
+      snapshot.forEach(function(snapshot2){
+        if(snapshot2.key() === $("#ad-title").val()){
+          alert("ad name already takin please change it");
+          // set flag to true so ad data will not be overwritten
+          flag = true;
+        }
+      });
+    // if flag is true no data will be written
+    if(flag == false){
+      // this stores ad details in users/userid/listings
+      myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
+        {
+        description: $('#ad-desc').val(),
+        date: actualDate,
+        type: $("#section option:selected").text()
+        }
+      )
+      // get reference to users details that posted the ad
+      var time = new Date().getTime();
+      var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid );
+      userRef.once("value", function(userNameSnapshot) {
+        // get snapshot of user to save details
+        data = userNameSnapshot.val();
+      var listRef = myDataRef.child($("#section option:selected").text()); 
+      // this stores ad details under the skill name from dropdown menu and the ad name entered
+      listRef.child($("#ad-title").val()).set( 
+        {
+        description: $('#ad-desc').val(),
+        // logged in users id, defined up the top
+        user: userKey,
+        date: actualDate,
+        name: data.fname + " " + data.lname,
+        timeadded: 10000000000000 - time,
+        county: data.county
+        }
+      )
+      // clears fields 
+      alert("Listing Saved");
+      $('#ad-desc').val("");
+      $("#ad-title").val("");
+      });
+      }
+    });
+    }
+      
+  }
+  // clear fields when reset form is clicked
+  function Clear(){
+    $('#ad-desc').val("");
+    $("#ad-title").val("");
+  }
+  // dropdown menu, saves option selected so search results page can display choosen skill ads
+  function ArtsAndCrafts(){
+    sessionStorage.setItem('label', 'Arts and Crafts');
+  }
+  function Coding(){
+    sessionStorage.setItem('label', 'Coding');
+  }
+  function Cooking(){
+    sessionStorage.setItem('label', 'Cooking');
+  }
+  function Construction(){
+    sessionStorage.setItem('label', 'Construction');
+  }
+  function Carpentry(){
+    sessionStorage.setItem('label', 'Carpentry');
+  }
+  function Farming(){
+    sessionStorage.setItem('label', 'Farming');
+  }
+  function Languages(){
+    sessionStorage.setItem('label', 'Languages');
+  }
+  function Music(){
+    sessionStorage.setItem('label', 'Music');
+  }
+  function Mechanics(){
+    sessionStorage.setItem('label', 'Mechanics');
+  }
+  function Painting(){
+    sessionStorage.setItem('label', 'Painting');
+  }
+  function Sports(){
+    sessionStorage.setItem('label', 'Sports');
+  }
+  function WebDesign(){
+    sessionStorage.setItem('label', 'Web Design');
+  }
+  function Other(){
+    sessionStorage.setItem('label', 'Other');
+  }
   </script>
 
 <!--FIXED MAIN NAVBAR-->
@@ -234,21 +221,21 @@
         <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
-			<ul class="dropdown-menu">
-				<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
-				<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
-				<li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
-				<li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
-				<li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
-				<li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
-				<li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
-				<li><a href="SearchResult.html" onclick="Music()">Music</a></li>
-				<li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
-				<li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
-				<li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
-				<li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
-				<li><a href="SearchResult.html" onclick="Other()">Other</a></li>
-			</ul>
+      <ul class="dropdown-menu">
+        <li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+        <li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+        <li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+        <li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+        <li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+        <li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+        <li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+        <li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+        <li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+        <li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+        <li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+        <li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+        <li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+      </ul>
           </li>
           <!--<div class="row">
             <div id="custom-search-input">
@@ -266,9 +253,9 @@
   </div>
   <!--END MAIN NAVBAR-->
     
-		
-		<br>
-	
+    
+    <br>
+  
   
  <div class="container" id="listing"> <!--create listing container-->
  <!--jumbotron inside container so its not full width of page-->
@@ -302,28 +289,28 @@
             </div>
           </form>
 
-
-          <!-- Drop Zone to drag and drop pics into -->
+<!--
+          <!-- Drop Zone to drag and drop pics into ->
           <h4>Or drag and drop files below</h4>
           <div class="upload-drop-zone" id="drop-zone">
             Just drag and drop files here
           </div>
 
-          <!-- pics that have been processed,/uploaded sucessfully-->
+          <!-- pics that have been processed,/uploaded sucessfully->
            <div class="js-upload-finished">
             <h4>Processed files</h4>
              <div class="list-group">
-             <!--if uploaded sucessfully -->
+             <!--if uploaded sucessfully ->
               <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
               <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
                <br>
 
-              <!-- press button to delete photos you have uploaded-->
+              <!-- press button to delete photos you have uploaded->
               <button type="button" id= "deletepic"class="delete-photo">
                                 Delete
                             </button>
-            </div> <!-- /list-group-->
-          </div>  <!-- /js-upload-finished-->
+            </div> <!-- /list-group->
+          </div>  -->
         </div><!-- /panel body-->
       </div><!-- /panel panel-default-->
     </div> <!-- /container for uploading pics-->
@@ -392,7 +379,7 @@
            <!-- swap button now buuton posts the ad -->
            <a onclick="StoreListing()" class="btn-primary get-Started-btn" id="swapnowbtn">Swap Now!</a>
            <br>
-			<br>
+      <br>
 
       <!-- by clicking you agree to T+C's ... set up link to T+C page here-->
           <div id="tandclink">
@@ -412,7 +399,7 @@
 </div> <!--end jumbotron vertical-center-->
 </div>  <!--end create listing container-->
 
-		
+    
 
 <!-- FIXED FOOTER NAVBAR -->
     
@@ -453,6 +440,6 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-		
+    
   </body>
 </html>
