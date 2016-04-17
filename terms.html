@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+    <!--firebase-->
+  <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+      
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--JAVASCRIPT TO CYCLE IMAGES-->
+  
+  <!--END JAVASCRIPT TO CYCLE IMAGES-->
+    
+
+    <title>Terms and Conditions</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="modalworking.css" rel="stylesheet">
+  <link href="terms.css"rel="stylesheet" type="text/css" >
+
+  
+  </head>
+  
+  <!---------------------------------------------------->
+  
+  <body>
+  <script>
+   
+    // dropdown menu, saves option selected so search results page can display choosen skill ads
+    function ArtsAndCrafts(){
+      sessionStorage.setItem('label', 'Arts and Crafts');
+    }
+    function Coding(){
+      sessionStorage.setItem('label', 'Coding');
+    }
+    function Cooking(){
+      sessionStorage.setItem('label', 'Cooking');
+    }
+    function Construction(){
+      sessionStorage.setItem('label', 'Construction');
+    }
+    function Carpentry(){
+      sessionStorage.setItem('label', 'Carpentry');
+    }
+    function Farming(){
+      sessionStorage.setItem('label', 'Farming');
+    }
+    function Languages(){
+      sessionStorage.setItem('label', 'Languages');
+    }
+    function Music(){
+      sessionStorage.setItem('label', 'Music');
+    }
+    function Mechanics(){
+      sessionStorage.setItem('label', 'Mechanics');
+    }
+    function Painting(){
+      sessionStorage.setItem('label', 'Painting');
+    }
+    function Sports(){
+      sessionStorage.setItem('label', 'Sports');
+    }
+    function WebDesign(){
+      sessionStorage.setItem('label', 'Web Design');
+    }
+    function Other(){
+      sessionStorage.setItem('label', 'Other');
+    }
+    // show search results page when finished loading them
+      $(window).load(function() {
+    $("body").show();
+    }); 
+  </script>
+  <!--FIXED MAIN NAVBAR-->
+  
+  <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--MOBILE AND TABLET MENU ICON-->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <!--END MOBILE AND TABLET MENU ICON-->
+
+        <a class="navbar-brand" href="#">SwapMySkills</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <!--NAVIGATION LINKS-->
+        <ul class="nav navbar-nav navbar-center">
+          <li><a href="HomePageV2.html">Home</a></li>
+          <li><a href="#">About</a></li>
+          <!--SAMPLE DROPDOWN-->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Admin & Dashboard</li>
+              <li><a href="#">Admin 1</a></li>
+              <li><a href="#">Admin 2</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Portfolio</li>
+              <li><a href="#">Portfolio 1</a></li>
+              <li><a href="#">Portfolio 2</a></li>
+            </ul>
+          </li>
+          <!--END SAMPLE DROPDOWN-->
+          <li><a href="#contact" data-toggle="modal">Contact</a></li>
+        </ul>
+        <!--NAVIGATION LINKS-->
+        <!--SEARCH BAR-->
+        <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+              <li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+              <li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+              <li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+              <li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+              <li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+              <li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+              <li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+              <li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+              <li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+              <li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+              <li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+              <li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+            </ul>
+          </li>
+          <!--<div class="row">
+            <div id="custom-search-input">
+              <div class="input-group">
+                <input type="text" class="  search-query form-control" placeholder="Search" />
+                <span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+                </button></span>
+              </div>
+            </div>
+          </div>-->
+        </ul>
+        <!--END SEARCHBAR-->
+      </div>
+    </div>
+  </div>
+  <!--END MAIN NAVBAR-->
+    
+    
+    
+  <!----------------------------------------------------> 
+
+    
+    <div class="container" id="terms"> <!---->
+
+    <h1 class="text-center" id="terms-heading">Terms and Conditions</h1>
+    
+   
+
+
+<div class="container">
+<div id="content" class="site-content row">
+<div id="primary" class="content-area col-sm-12"> 
+<main id="main" class="site-main" role="main"> 
+<br>
+<div class="entry-content">
+
+<p>This stuff is pretty important so we recommend you read it thoroughly and don't skip any parts as it may effect you later on.</p><br>
+
+<h4>Terms of Use</h4>
+
+By accessing or using the <a href="HomePageV2.html">SwapMySkills</a> website in any manner, including, but not limited to, visiting or browsing the Site or contributing content to the Site, you agree to be bound by our Terms of Use.</p><br>
+
+<h4>Registration</h4>
+
+<p>Registration is not required if you simply want to browse through the advertisements on the Website. Registration is required if you want to view full advertisements, place advertisements, view other users profiles, interact with other users, etc.
+</p><br>
+
+<h4>Interactions with other users</h4>
+
+<p>Your interactions with other users are solely between you and the other user.  We accept no responsibility for interactions that take place on the Website.</p><br>
+
+<h4>Content standards</h4>
+
+<p>These provisions apply to any and all Content which you contribute to the Website.
+You must comply with th following standards.<br>
+You are solely responsible for any Content that you submit, publish or display on the Website or transmit to other Website users.</p>
+
+<p> You understand that all information publicly posted or privately transmitted through the Website is the sole responsibility of the person from which such content originated and that we will not be liable for any errors or omissions in any content or as a result of any user’s use of the Website. You understand that we cannot guarantee the identity of any other users with whom you may interact in the course of using this site. Additionally, we cannot guarantee the authenticity of any data which users may provide about themselves.</p>
+
+<p>Content must:<br>
+
+a. be accurate and genuine (where it states facts);<br>
+
+b.  comply with applicable law in Ireland.</p>
+
+<p>You must not:<br>
+
+a. defame, harass, threaten or otherwise offend others;<br>
+
+b. post Content that is unlawful, obscene, defamatory, indecent, offensive, discriminatory or inappropriate;<br>
+
+c. post Content in breach any applicable laws or regulations;<br>
+
+d. misrepresent your identity or  current/previous positions and qualifications, or your affiliations with a person or entity;</p>
+
+<p>We do not control the Content posted by users, including the content of any advertisements, and we do not guarantee the accuracy, integrity or quality of such Content. You understand that by using the Website, you may be exposed to Content that is offensive, indecent or objectionable.</p><br>
+
+<h4>Termination</h4>
+
+<p>We may terminate your access to the Site, without cause or notice, if we feel our terms of use have been violated in any way.</p><br>
+
+<h4>Changes To This Agreement</h4>
+
+<p>We reserve the right, at our sole discretion, to modify or replace these Terms of Service by posting the updated terms on the Site. Your continued use of the Site after any such changes constitutes your acceptance of the new Terms of Service.</p>
+<p>Please review this Agreement periodically for changes. If you do not agree to any of this Agreement or any changes to this Agreement, do not use, access or continue to access the Site or discontinue any use of the Site immediately.</p><br><br>
+
+
+ </main>
+ </div>
+ </div>
+ </div></div></body>
+
+
+
+<!-------------------------------->
+    
+  <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <div class="navbar-text pull-left" id="footerText">
+        <p>2016 Software Project</p>
+      </div>
+      <div class="navbar-text pull-right">
+        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+      </div>
+    </div>
+  </div>
+  <!--END FIXED FOOTER NAVBAR-->
+    
+    
+    
+  <!----------------------------------------------------> 
+    
+    
+    
+  <!--CONTACT MODAL-->
+  <div class="modal fade" id="contact" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Contact</h4>
+        </div>
+        <div class="modal-body">
+          <p>For general inquiries please email ___@______.__</p>
+        </div>
+        <div class="modal-footer">  <!-- Button to close modal -->
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--END CONTACT MODAL-->
+  
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
