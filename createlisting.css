@@ -1,8 +1,8 @@
 body {
-	
+  
 padding-top:100px;
-	background-image: url(http://www.cravehealthnow.com/wp-content/uploads/2014/01/1360103186_abstract-green-nature-web-background.jpg);
-	background-size:cover;
+  background-image: url(http://www.cravehealthnow.com/wp-content/uploads/2014/01/1360103186_abstract-green-nature-web-background.jpg);
+  background-size:cover;
 }
 
 
@@ -21,20 +21,20 @@ padding-bottom: 10px;
   width: 75%;
 }
 
-/* drop zone */
+/* drop zone 
 .upload-drop-zone {
   height: 200px;
   border-width: 2px;
   margin-bottom: 20px;
-  color: #ccc;  /* color of text inside drop box*/
+  color: #ccc;  
   border-style: dashed;
   border-color: #ccc;
-  line-height: 200px; /* position of text inside drop box*/
+  line-height: 200px; 
   text-align: center;   
 }
-
-#deletepic,#js-upload-submit, #swapnowbtn{
-	  color: #fff; /* color of text inside button */
+*/
+#js-upload-submit, #swapnowbtn{
+    color: #fff; /* color of text inside button */
     background-color: #337ab7;
      padding: 6px 12px;
     margin-bottom: 0;
@@ -46,7 +46,7 @@ padding-bottom: 10px;
 }
  
 p.tandc-info{
-	font-size:12px;
+  font-size:12px;
 }
 
 /*text area for description*/
@@ -61,4 +61,7 @@ p.tandc-info{
 input[type="text"], input[type="tel"], [type="county"], [type="section"]{
     width: 60%;
     min-height: 44px;
+}
+textarea{
+  resize: none;
 }
