@@ -135,48 +135,36 @@
 		$("body").show();
 		}); 
 	</script>
-	<!--FIXED MAIN NAVBAR-->
-  
 	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 			<!--MOBILE AND TABLET MENU ICON-->
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" id="toggleButton">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
 			<!--END MOBILE AND TABLET MENU ICON-->
-
 				<a class="navbar-brand" href="#">SwapMySkills</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<!--NAVIGATION LINKS-->
 				<ul class="nav navbar-nav navbar-center">
-					<li><a href="HomePageV2.html">Home</a></li>
-					<li><a href="#">About</a></li>
-					<!--SAMPLE DROPDOWN-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Admin & Dashboard</li>
-							<li><a href="#">Admin 1</a></li>
-							<li><a href="#">Admin 2</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Portfolio</li>
-							<li><a href="#">Portfolio 1</a></li>
-							<li><a href="#">Portfolio 2</a></li>
-						</ul>
-					</li>
-					<!--END SAMPLE DROPDOWN-->
-					<li><a href="#contact" data-toggle="modal">Contact</a></li>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">My Profile</a></li>
+					<!--<li><a href="#">About Us</a></li>
+					<li><a href="#">Terms & Conditions</a></li>
+					<li><a href="#">Sitemap</a></li>-->
+					<li><a href="#contact" data-toggle="modal">Contact Us</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
 				</ul>
-				<!--NAVIGATION LINKS-->
+				<!--END NAVIGATION LINKS-->
 				<!--SEARCH BAR-->
 				<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
 							<li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
@@ -208,6 +196,7 @@
 		</div>
 	</div>
 	<!--END MAIN NAVBAR-->
+		
 		
 		
 		
@@ -292,43 +281,49 @@
 
 <!-------------------------------->
 		
-	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-		<div class="container">
-			<div class="navbar-text pull-left" id="footerText">
-				<p>2016 Software Project</p>
+	
+
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="navbar-collapse collapse" id="footerText">
+				<ul class="nav navbar-nav navbar-center">
+				<li><a href="#">About Us</a></li>
+				<li><a href="terms.html">Terms & Conditions</a></li>
+				<li><a href="#">Sitemap</a></li>
+				</ul>
 			</div>
-			<div class="navbar-text pull-right">
+			<!--<div class="navbar-text pull-right">
 				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
 				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
 				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
-			</div>
+			</div>-->
 		</div>
 	</div>
 	<!--END FIXED FOOTER NAVBAR-->
 		
-		
-		
-	<!---------------------------------------------------->	
-		
-		
-		
-	<!--CONTACT MODAL-->
-	<div class="modal fade" id="contact" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4>Contact</h4>
-				</div>
-				<div class="modal-body">
-					<p>For general inquiries please email ___@______.__</p>
-				</div>
-				<div class="modal-footer">	<!-- Button to close modal -->
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		<!--CONTACT MODAL-->
+		<div class="modal fade" id="contact" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--MODAL HEADER-->
+					<div class="modal-header">
+						<h4>Contact</h4>
+					</div>
+					<!--END MODAL HEADER-->
+					<!--MODAL BODY-->
+					<div class="modal-body">
+						<p>For general inquiries please email ___@______.__</p>
+					</div>
+					<!--END MODAL BODY-->
+					<!--MODAL FOOTER-->
+					<div class="modal-footer">	<!-- Button to close modal -->
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					</div>
+					<!--END MODAL FOOTER-->
 				</div>
 			</div>
 		</div>
-	</div>
-	<!--END CONTACT MODAL-->
+		<!--END CONTACT MODAL-->
+
 	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
