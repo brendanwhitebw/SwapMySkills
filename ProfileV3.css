@@ -63,15 +63,6 @@
 	overflow: scroll;
 }
 
-a > img {/*the images for the listings*/
-	max-height:200px;
-	max-width:200px;
-	min-height:200px;
-	min-width:200px;
-	margin-top:10px;
-	border:ridge 8px #558C89;
-}
-
 /*END RIGHT SIDE STYLING*/
 
 /*LEFT SIDE STYLING*/
@@ -155,7 +146,8 @@ a > img {/*the images for the listings*/
 }
 
 #commentsList{
-	max-height:260px;
+	max-height:265px;
+	min-height:265px;
 	overflow: scroll;
 }
 
@@ -175,6 +167,10 @@ a > img {/*the images for the listings*/
 	border-top:1px dotted black;
 	margin-top:20px;
 	padding-top:10px;
+}
+
+#commentInput{
+	resize: none;
 }
 /*End comment section styling*/
 
