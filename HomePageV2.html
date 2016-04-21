@@ -78,8 +78,10 @@
 			}
 			// reference firebase for random skill
 			var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/' + selectedSkill);
+			
 			// take snapshot of ad names in selected skill
 			ref.on("child_added", function(snapshot){
+			$('#load').remove();
 			    // generate each listing with info for the last added ad in the selected skill
 				var ad = $('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
 				// only display six istings (have to do it this way because of callbacks) after div id = r1 
@@ -177,12 +179,17 @@
 			  $('#inputSuccess3').val("");
 			  $('#loginbtn').hide();
 			  $('#signupbtn').hide();
+			  $('#logInNav').hide();
+			  $('#signUpNav').hide();
+			  
 			  
 			  $('#viewprofile').show();
 			  $('#logoutbtn').show();
+			  $('#profileNav').show();
+			  $('#logOutNav').show();
 			  }},{  remember: "sessionOnly"
 			});
-			}
+		}
 		
 		
 		function GoToProfile(){
@@ -203,6 +210,10 @@
 			  $('#signupbtn').show();
 			  $('#viewprofile').hide();
 			  $('#logoutbtn').hide();
+			  $('#logInNav').show();
+			  $('#signUpNav').show();
+			  $('#profileNav').hide();
+			  $('#logOutNav').hide();
 		}
 		// dropdown menu, saves option selected so search results page can display choosen skill ads
 		function ArtsAndCrafts(){
@@ -266,14 +277,14 @@
 			<div class="navbar-collapse collapse">
 				<!--NAVIGATION LINKS-->
 				<ul class="nav navbar-nav navbar-center">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">My Profile</a></li>
+					<li id="profileNav"><a href="PersonalProfile.html">My Profile</a></li>
 					<!--<li><a href="#">About Us</a></li>
 					<li><a href="#">Terms & Conditions</a></li>
 					<li><a href="#">Sitemap</a></li>-->
 					<li><a href="#contact" data-toggle="modal">Contact Us</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
+					<li id="logOutNav"><a href="#"  onclick="Logout()">Log Out</a></li>
+					<li id="logInNav"><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
+					<li id="signUpNav"><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
 				</ul>
 				<!--END NAVIGATION LINKS-->
 				<!--SEARCH BAR-->
@@ -332,7 +343,9 @@
 			
 		<!--GRID FOR LISTINGS-->
 		<div class="container-fluid" id="homegrid">
-			<div id = "r1" class="row">	<!--ROW 1-->
+			<div id = "r1" class="row">	
+			<img src= "loading.gif" id="load"><img>
+				<!--ROW 1-->
 				<!--<div class="col-md-4">
 					<a href="#">
 						<img class="img-rounded" src="img/mechanic.jpg" alt="mechanic">
@@ -509,9 +522,14 @@
 			if(authData == null){
 				document.getElementById("viewprofile").style.display = "none";
 				document.getElementById("logoutbtn").style.display = "none";
+				document.getElementById("profileNav").style.display = "none";
+				document.getElementById("logOutNav").style.display = "none";
 			}else{
 				document.getElementById("signupbtn").style.display = "none";
 				document.getElementById("loginbtn").style.display = "none";
+				document.getElementById("signUpNav").style.display = "none";
+				document.getElementById("logInNav").style.display = "none";
+				
 			}
 		</script>
 

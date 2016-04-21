@@ -35,6 +35,7 @@
   <body>
   
   <script>
+
   // html storage varibles passed in from previous page so the page knows what details to display
     var selectedAd = sessionStorage.getItem('viewListingAd');
   var selectedUser = sessionStorage.getItem('viewListingUser');
@@ -50,6 +51,8 @@
   });
   // display the listing data
   function displayUserDetails(fname, lname, email, county, telephone) {
+	$('#load').remove();
+	$('#adinfo').show();
     $('#DisplayLoc span').text(county);
     $('#ad-title span').text(selectedAd);
     $('#showdesc').text(selectedDesc);
@@ -58,6 +61,19 @@
     $('#DisplayNo span').text(telephone);
     $('#DisplayEmail span').text(email);
   }
+  
+	function Logout(){
+	var myDataRef = new Firebase("https://sizzling-inferno-5934.firebaseio.com/");
+	// log out user
+	   myDataRef.unauth();
+		var auth = myDataRef.getAuth();
+		if (auth) {
+			alert("error logging user out")
+		  }else{
+			location.href="HomePageV2.html"; 
+		  }		  
+	}
+  
   // dropdown menu, saves option selected so search results page can display choosen skill ads
     function ArtsAndCrafts(){
       sessionStorage.setItem('label', 'Arts and Crafts');
@@ -117,14 +133,14 @@
       <div class="navbar-collapse collapse">
         <!--NAVIGATION LINKS-->
         <ul class="nav navbar-nav navbar-center">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">My Profile</a></li>
+			<li><a href="HomePageV2.html">Home</a></li>
+			<li><a href="PersonalProfile.html">My Profile</a></li>
           <!--<li><a href="#">About Us</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Sitemap</a></li>-->
           <li><a href="#contact" data-toggle="modal">Contact Us</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
+		  <li id="logOutNav"><a href="#"  onclick="Logout()">Log Out</a></li>
+
         </ul>
         <!--END NAVIGATION LINKS-->
         <!--SEARCH BAR-->
@@ -168,9 +184,11 @@
 <br>
 
 
-
+	 <img src= "loading.gif" id="load"><img>
      <!--container for all ad details-->
+
       <div class="container" id="adinfo">
+	  
           <h1 class="text-center" id="ad-title" ><span id="here"></span><!--listing name/title--></h1> 
         <div class="panel panel-default"> 
           <div class="panel-body">
@@ -336,7 +354,9 @@
       </div>
     </div>
     <!--END CONTACT MODAL-->
-
+  <script>
+  document.getElementById("adinfo").style.display = "none";
+  </script>
   
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
