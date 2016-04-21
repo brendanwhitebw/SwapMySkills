@@ -71,6 +71,7 @@
 		});
 	
 		function displayUserDetails(fname, lname, email, county, telephone, town, userdescription, skills) {
+			$('#load').remove();
 			// fill page with user details from database
 			$('#profileName span').text(fname + ' ' + lname);
 			$('#displayLocation span').text(town + ', ' + county);
@@ -92,6 +93,7 @@
 		var listingsRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid + '/listings');
 		listingsRef.on("value", function(snapshot){
 		    $('.col-md-4').remove();
+			$('#load').remove();
 			// for each ad name display and loop
 			snapshot.forEach(function(snapshot2){
 				var ad = ('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
@@ -157,6 +159,7 @@
 			// remove comments so the list can repopulate
 			$('.media').remove();
 			// for each time when comments were posted
+			$('#load').remove();
 			commentsSnapshot.forEach(function(allTimesSnapshot){
 
 					// calculate difference in time from when comment was added
@@ -218,6 +221,18 @@
 				// save user id assosiated with that ad so it can be referenced in profile page
 				sessionStorage.setItem('profilePageUser', userId);
 				location.href="ProfileV3.html"; 			
+		}
+		
+		function Logout(){
+		// log out user
+		   ref.unauth();
+			var auth = ref.getAuth();
+			if (auth) {
+				alert("error logging user out")
+			  }else{
+				location.href="HomePageV2.html"; 
+			  }
+			  
 		}
 
 		// dropdown menu, saves option selected so search results page can display choosen skill ads
@@ -287,13 +302,11 @@
 				<!--NAVIGATION LINKS-->
 				<ul class="nav navbar-nav navbar-center">
 					<li><a href="HomePageV2.html">Home</a></li>
-					<li class="active"><a href="#">My Profile</a></li>
 					<!--<li><a href="#">About Us</a></li>
 					<li><a href="#">Terms & Conditions</a></li>
 					<li><a href="#">Sitemap</a></li>-->
 					<li><a href="#contact" data-toggle="modal">Contact Us</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
-					<li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
+					<li id="logOutNav"><a href="#"  onclick="Logout()">Log Out</a></li>
 				</ul>
 				<!--END NAVIGATION LINKS-->
 				<!--SEARCH BAR-->
@@ -410,7 +423,7 @@
 		<div id="largeDiv">
 			<!--PROFILE TEXT-->
 			<div id="profileText" placeholder="Tell us about yourself...">
-				
+				<img src= "loading.gif" id="load"><img>
 			</div>
 			<!--END PROFILE TEXT-->
 			
@@ -423,6 +436,7 @@
 			</center>
 			<!--LIST OF COMMENTS-->
             		<div id="commentsList">
+					<img src= "loading.gif" id="load"><img>
 					<!-- POPULATED FROM FIREBASE -->
             		</div>
 			<!--END LIST OF COMMENTS-->
@@ -433,7 +447,7 @@
 			<!--USER LISTINGS-->
 			<div class="container-fluid" id="profilegrid">
 				<div id="r1" class="row">
-
+				<img src= "loading.gif" id="load"><img>
 					<!--<div class="col-md-4">
 						<a href="#">
 						<img class="img-rounded" src="img/chef.jpg" alt="chef">

@@ -10,6 +10,11 @@
     background-color: #d5ffd5;
 }*/
 
+#load {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
 
 #hid{
 	overflow: hidden;
