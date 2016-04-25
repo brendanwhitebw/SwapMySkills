@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+    <!--firebase-->
+  <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+      
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--JAVASCRIPT TO CYCLE IMAGES-->
+  
+  <!--END JAVASCRIPT TO CYCLE IMAGES-->
+    
+    <title>Error</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="modalworking.css" rel="stylesheet">
+  <link href="error.css"rel="stylesheet" type="text/css" >
+  
+  </head>
+  
+  
+  <body>
+  <script>
+   
+    // dropdown menu, saves option selected so search results page can display choosen skill ads
+    function ArtsAndCrafts(){
+      sessionStorage.setItem('label', 'Arts and Crafts');
+    }
+    function Coding(){
+      sessionStorage.setItem('label', 'Coding');
+    }
+    function Cooking(){
+      sessionStorage.setItem('label', 'Cooking');
+    }
+    function Construction(){
+      sessionStorage.setItem('label', 'Construction');
+    }
+    function Carpentry(){
+      sessionStorage.setItem('label', 'Carpentry');
+    }
+    function Farming(){
+      sessionStorage.setItem('label', 'Farming');
+    }
+    function Languages(){
+      sessionStorage.setItem('label', 'Languages');
+    }
+    function Music(){
+      sessionStorage.setItem('label', 'Music');
+    }
+    function Mechanics(){
+      sessionStorage.setItem('label', 'Mechanics');
+    }
+    function Painting(){
+      sessionStorage.setItem('label', 'Painting');
+    }
+    function Sports(){
+      sessionStorage.setItem('label', 'Sports');
+    }
+    function WebDesign(){
+      sessionStorage.setItem('label', 'Web Design');
+    }
+    function Other(){
+      sessionStorage.setItem('label', 'Other');
+    }
+    // show search results page when finished loading them
+      $(window).load(function() {
+    $("body").show();
+    }); 
+  </script>
+
+
+  <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--MOBILE AND TABLET MENU ICON-->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" id="toggleButton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <!--END MOBILE AND TABLET MENU ICON-->
+        <a class="navbar-brand" href="#">SwapMySkills</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <!--NAVIGATION LINKS-->
+        <ul class="nav navbar-nav navbar-center">
+          <li><a href="HomePageV2.html">Home</a></li>
+          <li><a href="PersonalProfile.html">My Profile</a></li>
+          <!--<li><a href="#">About Us</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Sitemap</a></li>-->
+          <li><a href="#contact" data-toggle="modal">Contact Us</a></li>
+          
+         
+        </ul>
+        <!--END NAVIGATION LINKS-->
+        <!--SEARCH BAR-->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+              <li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+              <li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+              <li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+              <li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+              <li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+              <li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+              <li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+              <li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+              <li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+              <li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+              <li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+              <li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+            </ul>
+          </li>
+          <!--<div class="row">
+            <div id="custom-search-input">
+              <div class="input-group">
+                <input type="text" class="  search-query form-control" placeholder="Search" />
+                <span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+                </button></span>
+              </div>
+            </div>
+          </div>-->
+        </ul>
+        <!--END SEARCHBAR-->
+      </div>
+    </div>
+  </div>
+  <!--END MAIN NAVBAR-->
+
+  <div class="container" id="error">
+  <div class="jumbotron" id="jum-error">
+    <h1 class="text-center" id="error-heading">Error</h1> <br><br>
+    <p class="text-center" id="error-message">Oops, an error has occured.  Please return to our <a href="HomePageV2.html">Home Page</a>.
+    
+
+<img src="http://cdn.totalsororitymove.com/wp-content/uploads/2015/08/a780337ec18d70ffcc95f75888dec6db.png" alt="Image">
+
+
+    <br>
+
+       Sorry for any inconvenience.</p> 
+  </div>
+</div>
+
+
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="navbar-collapse collapse" id="footerText">
+        <ul class="nav navbar-nav navbar-center">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li><a href="Sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+      <!--<div class="navbar-text pull-right">
+        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+      </div>-->
+    </div>
+  </div>
+  <!--END FIXED FOOTER NAVBAR-->
+    
+    <!--CONTACT MODAL-->
+    <div class="modal fade" id="contact" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!--MODAL HEADER-->
+          <div class="modal-header">
+            <h4>Contact</h4>
+          </div>
+          <!--END MODAL HEADER-->
+          <!--MODAL BODY-->
+          <div class="modal-body">
+            <p>For general inquiries please email ___@______.__</p>
+          </div>
+          <!--END MODAL BODY-->
+          <!--MODAL FOOTER-->
+          <div class="modal-footer">  <!-- Button to close modal -->
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          </div>
+          <!--END MODAL FOOTER-->
+        </div>
+      </div>
+    </div>
+    <!--END CONTACT MODAL-->
+
+
+
+  
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
