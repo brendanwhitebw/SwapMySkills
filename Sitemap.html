@@ -1,201 +1,198 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  
+    <!--firebase-->
+  <script src='https://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+      
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
-		
 
-    <title>SwapMySkills SiteMap</title>
+    <title>Sitemap</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link href="modalworking.css" rel="stylesheet">
-	
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="modalworking.css" rel="stylesheet">
+
   </head>
-  
-  
-  
-  
-  
-  <!---------------------------------------------------->
-  <center></ul>
-	<ul class="Site Map">
-        <li class="cm_1"><a href="/SiteMap/what/">About sitemap</a></li>
-        <li class="cm_3"><a href="/SiteMap/email/">SwapMySkills<span> email</span></a></li>
-        
-    </ul>
-</div>
-<!--		End of Header		-->
-</body>  
-<div id="body_centre" class="clear">
-<div id="centre_mainpane" class="floatleft">
-	<div class="inset_centre_wrapper">
+
+<body>
+
+  <script>
+   
+    // dropdown menu, saves option selected so search results page can display choosen skill ads
+    function ArtsAndCrafts(){
+      sessionStorage.setItem('label', 'Arts and Crafts');
+    }
+    function Coding(){
+      sessionStorage.setItem('label', 'Coding');
+    }
+    function Cooking(){
+      sessionStorage.setItem('label', 'Cooking');
+    }
+    function Construction(){
+      sessionStorage.setItem('label', 'Construction');
+    }
+    function Carpentry(){
+      sessionStorage.setItem('label', 'Carpentry');
+    }
+    function Farming(){
+      sessionStorage.setItem('label', 'Farming');
+    }
+    function Languages(){
+      sessionStorage.setItem('label', 'Languages');
+    }
+    function Music(){
+      sessionStorage.setItem('label', 'Music');
+    }
+    function Mechanics(){
+      sessionStorage.setItem('label', 'Mechanics');
+    }
+    function Painting(){
+      sessionStorage.setItem('label', 'Painting');
+    }
+    function Sports(){
+      sessionStorage.setItem('label', 'Sports');
+    }
+    function WebDesign(){
+      sessionStorage.setItem('label', 'Web Design');
+    }
+    function Other(){
+      sessionStorage.setItem('label', 'Other');
+    }
+    // show search results page when finished loading them
+      $(window).load(function() {
+    $("body").show();
+    }); 
+  </script>
+  <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--MOBILE AND TABLET MENU ICON-->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" id="toggleButton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <!--END MOBILE AND TABLET MENU ICON-->
+        <a class="navbar-brand" href="#">SwapMySkills</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <!--NAVIGATION LINKS-->
+        <ul class="nav navbar-nav navbar-center">
+          <li><a href="HomePageV2">Home</a></li>
+          <li><a href="PersonalProfile.html">My Profile</a></li>
+          <!--<li><a href="#">About Us</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Sitemap</a></li>-->
+          <li><a href="#contact" data-toggle="modal">Contact Us</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
+        </ul>
+        <!--END NAVIGATION LINKS-->
+        <!--SEARCH BAR-->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="SearchResult.html" onclick="ArtsAndCrafts()">Arts and Crafts</a></li>
+              <li><a href="SearchResult.html" onclick="Coding()">Coding</a></li>
+              <li><a href="SearchResult.html" onclick="Cooking()">Cooking</a></li>
+              <li><a href="SearchResult.html" onclick="Construction()">Construction</a></li>
+              <li><a href="SearchResult.html" onclick="Carpentry()">Carpentry</a></li>
+              <li><a href="SearchResult.html" onclick="Farming()">Farming</a></li>
+              <li><a href="SearchResult.html" onclick="Languages()">Languages</a></li>
+              <li><a href="SearchResult.html" onclick="Music()">Music</a></li>
+              <li><a href="SearchResult.html" onclick="Mechanics()">Mechanics</a></li>
+              <li><a href="SearchResult.html" onclick="Painting()">Painting</a></li>
+              <li><a href="SearchResult.html" onclick="Sports()">Sports</a></li>
+              <li><a href="SearchResult.html" onclick="WebDesign()">Web Design</a></li>
+              <li><a href="SearchResult.html" onclick="Other()">Other</a></li>
+            </ul>
+          </li>
+          <!--<div class="row">
+            <div id="custom-search-input">
+              <div class="input-group">
+                <input type="text" class="  search-query form-control" placeholder="Search" />
+                <span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
+                </button></span>
+              </div>
+            </div>
+          </div>-->
+        </ul>
+        <!--END SEARCHBAR-->
+      </div>
+    </div>
+  </div>
+  <!--END MAIN NAVBAR-->
+
+	<div class="container" style="background-color:#fff">
 	
-	<div class="inset_centre_content">
-	<h1 class="page_intro">SwapMySkills sitemap</h1>
-	<dl>
-		<dt><a href="/sitemap/">sitemap Homepage</a></dt>
-        <dt><a href="/sitemap/register/">Register sitemap</a></dt>
-		<dd>Fill out Form</dd>
-
-		<dt><a href="/sitemap/contact/">Contact</a></dt>
-		<dd>Drop us a line</dd>
-
-		<dt><a href="/sitemap/profile/">Profile Page</a></dt>
-		<dd>Profile, skills location</dd>
-
-		<dt><a href="/sitemap/login/">Login Page</a></dt>
-		<dd>Password Needed</dd>
-
-	    <dt><a href="/sitemap/sitemap/">sitemap</a></dt>
-		<dd>You are here</dd>
-		<dt><a href="/sitemap/comment/">Comment Page</a></dt>
-		<dd>General Information</dd>
-		<dt><a href="/sitemap/signup/">Signing Up</a></dt>
-		<dd>First Name, Last Name, Address</dd>
-	    <dt><a href="/sitemap/admin/">Administration Dashboard</a></dt>
-		<dd>Need help?</dd>
-	
-		
-	</dl>
-
-	 </div><!-- /.inset_centre_wrapper -->
-</div><!-- /#centre_centrepane -->
-
-
-</div><!-- /#centre_centrepane -->
-</div><!-- /#body_centre -->
-
-
-<!--	Footer	-->
-
-<!--	 Footer	-->
-
-	<ul>
-		
-		
-		<li><a href="https://"><span>Sign up</span></a></li>
-	
-	
-<div id="footer_legal" class="footer_legal">SwapMySkills The skill swapping website
-</div>
-<!--	End of  Footer	-->
-
-</body>  
-
-<!--	End of Footer	--></center> 
-  
-  
-  <body>
-  
-	
-	
-	
-	<!--FIXED MAIN NAVBAR-->
-  
-	<div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
+		<center>
+		<h1 class="page_intro" style="color:#558C89; padding-top:20px">Sitemap</h1>
+		</center>
 		<div class="container">
-			<div class="navbar-header">
-			<!--MOBILE AND TABLET MENU ICON-->
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			<!--END MOBILE AND TABLET MENU ICON-->
-				<a class="navbar-brand" href="#">SwapMySkills</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<!--NAVIGATION LINKS-->
-				<ul class="nav navbar-nav navbar-center">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<!--SAMPLE DROPDOWN-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Admin & Dashboard</li>
-							<li><a href="#">Admin 1</a></li>
-							<li><a href="#">Admin 2</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Portfolio</li>
-							<li><a href="#">Portfolio 1</a></li>
-							<li><a href="#">Portfolio 2</a></li>
+	
+			<div id="content" class="site-content row">
+				<div id="primary" class="content-area col-sm-12"> 
+					<main id="main" class="site-main" role="main"> 
+						<ul style="list-style-type:none; padding:20px">
+						<li><a href="HomePageV2.html">Home</a></li>
+						<li>The main Home Page featuring welcome, log in, sign up and recent listings</li> 
+						<br/>
+						<li><a href="PersonalProfile.html">My Profile</a></li>
+						<li>View/edit your personal profile from here as well as adding/deleting your listings</li>
+						<br/>
+						<li><a href="terms.html">Terms & Conditions</a></li>
+						<li>Check the terms & conditions for SwapMySkills</li>
+						<br/>
+						<li><a href="#">About Us</a></li>
+						<li>Learn a little about the SwapMySkills idead</li>
+						<br/>
+						<li><a href="Sitemap.html">Sitemap</a></li>
+						<li>You are here!</li>
+						<br/>
+						<li>Create a Listing</li>
+						<li>To create a listing click the "Add A Listing" button in My Profile</li>
+						<br/>
+						<li>Search</li>
+						<li>Search existing listings using the dropdown search menu in the navigation bar</li>
+						<br/>
+						<li>View Listing</li>
+						<li>View a listing from the search results</li>
 						</ul>
-					</li>
-					<!--END SAMPLE DROPDOWN-->
-					<li><a href="#contact" data-toggle="modal">Contact</a></li>
-				</ul>
-				<!--NAVIGATION LINKS-->
-				<!--SEARCH BAR-->
-				<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Listings by Skill<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Arts and Crafts</a></li>
-							<li><a href="#">Coding</a></li>
-							<li><a href="#">Cooking</a></li>
-							<li><a href="#">Construction</a></li>
-							<li><a href="#">Carpentry</a></li>
-							<li><a href="#">Farming</a></li>
-							<li><a href="#">Languages</a></li>
-							<li><a href="#">Mechanics</a></li>
-							<li><a href="#">Painting</a></li>
-							<li><a href="#">Sports</a></li>
-							<li><a href="#">Web Design</a></li>
-						</ul>
-					</li>
-					<!--<div class="row">
-						<div id="custom-search-input">
-							<div class="input-group">
-								<input type="text" class="  search-query form-control" placeholder="Search" />
-								<span class="input-group-btn"><button class="btn btn-danger" type="button"><span class=" glyphicon glyphicon-search"></span>
-								</button></span>
-							</div>
-						</div>
-					</div>-->
-				</ul>
-				<!--END SEARCHBAR-->
+	
+					</main>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!--END MAIN NAVBAR-->
-		
     
-	
-	
-	
+</body>
+ 
 	<!---------------------------------------------------->	
-		
-		
-	<!-- FIXED FOOTER NAVBAR -->
 		
 		
 	<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-		<div class="container">
-			<div class="navbar-text pull-left" id="footerText">
-				<p>2016 Software Project</p>
-			</div>
-			<div class="navbar-text pull-right">
-				<a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
-				<a href="#"><i class="fa fa-twitter fa-2x"></i></a>
-				<a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
-			</div>
-		</div>
-	</div>
-	<!--END FIXED FOOTER NAVBAR-->
-		
-	<!---------------------------------------------------->	
-		
-		
-	
-	
-	
+      <div class="navbar-collapse collapse" id="footerText">
+        <ul class="nav navbar-nav navbar-center">
+        <li><a href="#">About Us</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li class="active"><a href="#">Sitemap</a></li>
+        </ul>
+      </div>
+      <!--<div class="navbar-text pull-right">
+        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+      </div>-->
+    </div>
+  </div>
+  <!--END FIXED FOOTER NAVBAR-->
 	
 	
 	<!--CONTACT MODAL-->
@@ -223,439 +220,3 @@
 	
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
