@@ -128,7 +128,7 @@
 			// when edit profile modal button is pressed
 		function Edit(){
 			var userKey = authData.uid;
-			
+			if($('#fnameinput').val() != "" && $('#lnameinput').val() != "" && $('#phoneinput').val() != "" && $('#countyinput').val() != "" && $('#towninput').val() != ""){
 			// update logged in user details to database
 			ref.child("users").child(userKey).update(
 				{
@@ -141,6 +141,9 @@
 					"userdescription": $('#userdetailinput').val()
 				}
 			);
+			}else{
+				alert("Please fill in *required fields");
+			}
 			// get new details of user 
 		myDataRef2.once("value", function(snapshot) {
 		var data = snapshot.val();
@@ -368,17 +371,22 @@
 				<div id="profileName">
 					<span>  </span>
 				</div>
-				<div id="profileJob">
-					...
-				</div>
+				 <!-- uploading images from you rcomputer -->
+          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+            <div class="form-inline">
+              <div class="form-group">
+                <input type="file" name="files[]" id="js-upload-files" multiple>
+              </div>
+              <input type="submit" class="btn btn-sm btn-primary" id="js-upload-submit" value="UPDATE PROFILE PICTURE">
+            </div>
+          </form>
 			</div>
 			<!--END USER NAME AND JOB TITLE-->
 					
-			<!--UPDATE PROFILE PIC BUTTON-->
+			<!--UPDATE PROFILE PIC BUTTON
 			<div id="profileChangePic">
 				<button type="button" class="btn btn-success">Update Profile Picture</button>
-			</div>
-			<br/>
+			</div> -->
 			<!--END UPDATE PROFILE PIC BUTTON-->
 				
 			<!--BASIC INFO-->
@@ -487,7 +495,7 @@
 				<ul class="nav navbar-nav navbar-center">
 				<li><a href="#">About Us</a></li>
 				<li><a href="#">Terms & Conditions</a></li>
-				<li><a href="Sitemap.html">Sitemap</a></li>
+				<li><a href="#">Sitemap</a></li>
 				</ul>
 			</div>
 			<!--<div class="navbar-text pull-right">
@@ -536,12 +544,12 @@
 				<div class="modal-body">
 					<div class="form-group has-feedback">	<!--NAME-->
 						<label class="control-label" for="namelabel">First name</label>
-						<input type="text" class="form-control" id="fnameinput" aria-describedby="nameinput" required="" maxlength="25">
+						<input type="text" class="form-control" id="* fnameinput" aria-describedby="nameinput" required="" maxlength="25">
 					</div>
 					
 					<div class="form-group has-feedback">	<!--NAME-->
 						<label class="control-label" for="namelabel">Last name</label>
-						<input type="text" class="form-control" id="lnameinput" aria-describedby="nameinput" required="" maxlength="25">
+						<input type="text" class="form-control" id="* lnameinput" aria-describedby="nameinput" required="" maxlength="25">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--SKILLS-->
@@ -551,17 +559,17 @@
 						
 					<div class="form-group has-feedback">	<!--TOWN-->
 						<label class="control-label" for="locationlabel">Town</label>
-						<input type="text" class="form-control" id="towninput" aria-describedby="towninput" required="" maxlength="30">
+						<input type="text" class="form-control" id="* towninput" aria-describedby="towninput" required="" maxlength="30">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--COUNTY-->
 						<label class="control-label" for="locationlabel">County</label>
-						<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" required="" maxlength="20">
+						<input type="text" class="form-control" id="* countyinput" aria-describedby="countyinput" required="" maxlength="20">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--Telephone-->
 						<label class="control-label" for="phonelabel">Telephone</label>
-						<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
+						<input type="tel" class="form-control" id="* phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
 					</div>
 					
 					<center>

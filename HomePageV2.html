@@ -115,7 +115,7 @@
 		//check if passwords match before creating user
 		if($('#passwordinput').val() == $('#re-enterpasswordinput').val()){
 			// check no fields are empty
-			if($('#firstnameinput').val()!= "" && $('#lastnameinput').val() != "" && $('#phoneinput').val() != ""){
+			if($('#firstnameinput').val()!= "" && $('#lastnameinput').val() != "" && $('#phoneinput').val() != "" && $('#countyinput').val() != "" && $('#towninput').val() != ""){
 				// create account with username and password
 				myDataRef.createUser({
 				  email    : $('#emailinput').val(),
@@ -369,7 +369,7 @@
 				<ul class="nav navbar-nav navbar-center">
 				<li><a href="#">About Us</a></li>
 				<li><a href="#">Terms & Conditions</a></li>
-				<li><a href="Sitemap.html">Sitemap</a></li>
+				<li><a href="#">Sitemap</a></li>
 				</ul>
 			</div>
 			<!--<div class="navbar-text pull-right">
@@ -450,13 +450,13 @@
 						</div>
 						
 						<div class="form-group has-feedback">	<!-- Town -->
-							<label class="control-label" for="townlabel">Town/City</label>
-							<input type="text" class="form-control" id="towninput" aria-describedby="towninput" maxlength="30"> 
+							<label class="control-label" for="townlabel">* Town/City</label>
+							<input type="text" class="form-control" id="towninput" aria-describedby="towninput" required="" maxlength="30"> 
 						</div>
                 
 						<div class="form-group has-feedback">	<!-- County -->
-							<label class="control-label" for="countylabel">County</label>
-							<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" maxlength="20">
+							<label class="control-label" for="countylabel">* County</label>
+							<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" required="" maxlength="20">
 						</div>
 						
 						<br/>
