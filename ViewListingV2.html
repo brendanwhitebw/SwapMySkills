@@ -47,6 +47,7 @@
   ref.once("value", function(snapshot) {
     var data = snapshot.val();
     // pass in user info to function
+	
     displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone);
   });
   // display the listing data
@@ -57,7 +58,7 @@
     $('#ad-title span').text(selectedAd);
     $('#showdesc').text(selectedDesc);
     $('#DisplayDate span').text(selectedDate);
-    $('#DisplayName span').text(fname + " " + lname);
+    $('#DisplayName a').text(fname + " " + lname);
     $('#DisplayNo span').text(telephone);
     $('#DisplayEmail span').text(email);
   }
@@ -72,6 +73,25 @@
 		  }else{
 			location.href="HomePageV2.html"; 
 		  }		  
+	}
+	
+		function SaveProfileInfo(){
+		// check if user is logged in
+		var authData = ref.getAuth();
+		if(authData == null){
+			alert("You must be logged in to view user accounts");
+		}else{
+			if(authData.uid === selectedUser){
+				// go to personal profile page if logged in user clicks their own name
+				location.href="PersonalProfile.html";
+			}
+			else{
+				// save user id assosiated with that ad so it can be referenced in profile page
+				sessionStorage.setItem('profilePageUser', selectedUser);
+				location.href="ProfileV3.html"; 
+			}
+		}
+
 	}
   
   // dropdown menu, saves option selected so search results page can display choosen skill ads
@@ -231,7 +251,7 @@
             <ul style="list-style-type:none">
               
               <li id="DisplayName">
-                <b>Listed by:</b> <span></span>
+                <b>Listed by:</b> <a href="#" onclick="SaveProfileInfo()" title=""> </a>
               </li>
               <li id="DisplayNo">
                 <b>Phone:</b> <span></span>

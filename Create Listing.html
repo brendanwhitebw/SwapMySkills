@@ -73,7 +73,7 @@
   // uses Date.js to get current date and time 
   var actualDate = date.toString("HH:mm dd/MM/yy");
     // if no skill selected in dropdown do not write to firebase
-    if($("#section option:selected").text() == "Choose a section"){
+    if($("#section option:selected").text() == "Choose a section" || $('#ad-desc').val() == ""){
       alert("Please fill out all fields and select a skill");
     }
     // if not aphla-numeric and white space then do not write to firebase
@@ -286,7 +286,7 @@
               <div class="form-group">
                 <input type="file" name="files[]" id="js-upload-files" multiple>
               </div>
-              <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload photos</button>
+              <input type="submit" class="btn btn-sm btn-primary" id="js-upload-submit" value="Upload photo">
             </div>
           </form>
 
@@ -408,7 +408,7 @@
         <ul class="nav navbar-nav navbar-center">
         <li><a href="#">About Us</a></li>
         <li><a href="terms.html">Terms & Conditions</a></li>
-        <li><a href="Sitemap.html">Sitemap</a></li>
+        <li><a href="#">Sitemap</a></li>
         </ul>
       </div>
       <!--<div class="navbar-text pull-right">
