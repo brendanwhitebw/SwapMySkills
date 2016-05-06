@@ -83,7 +83,7 @@
 			ref.on("child_added", function(snapshot){
 			$('#load').remove();
 			    // generate each listing with info for the last added ad in the selected skill
-				var ad = $('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
+				var ad = $('<div class="col-md-4"><img class="img-rounded" src="' + snapshot.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 id ="hid">'+ snapshot.key() +'</h3><p class = "p1" >'+ snapshot.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + snapshot.child("user").val() + '\',\'' + snapshot.key() + '\',\'' + snapshot.child("description").val() + '\',\'' + snapshot.child("date").val()  + '\')" class="btn btn-danger">View Listing</a></div>');
 				// only display six istings (have to do it this way because of callbacks) after div id = r1 
 				if(j<6){
 				$("#r1").append(ad);
@@ -172,7 +172,8 @@
 			  password : $('#inputSuccess3').val()
 			}, function(error, authData) {
 			  if (error) {
-			  alert(error);
+			  //alert(error);
+			  location.href = "error.html";
 			  } else {
 			  // hide/ show proflie an login buttons
 			  $('#inputSuccess2').val("");
@@ -181,8 +182,7 @@
 			  $('#signupbtn').hide();
 			  $('#logInNav').hide();
 			  $('#signUpNav').hide();
-			  
-			  
+			   
 			  $('#viewprofile').show();
 			  $('#logoutbtn').show();
 			  $('#profileNav').show();
@@ -500,7 +500,7 @@
 							<label class="control-label">Password</label>
 							<input type="password" class="form-control" id="inputSuccess3" aria-describedby="inputSuccess2Status" placeholder="Password">
 							</br>
-							<button type="button" onclick="login()" class="btn btn-primary" data-dismiss="modal">Login</button>
+							<button type="button" id="loginTest" onclick="login()" class="btn btn-primary" data-dismiss="modal">Login</button>
 						</div>
 					</div>
 					<!--END MODAL BODY-->
