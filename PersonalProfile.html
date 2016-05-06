@@ -157,7 +157,7 @@
 			return;
 		}
 		//pass info to fuction to display new data
-			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills, data.photo);
 		});
 		}
 		
@@ -302,9 +302,6 @@
 		        fileReader.onload = function(fileLoadedEvent) {
 		        	//this converts are img into base64
 		            srcData = fileLoadedEvent.target.result; 
-		  			
-					
-		            alert("Image encoded");
 					}
 				
 		        }
@@ -313,11 +310,9 @@
 
 		function photoFunction()	{
 		var userKey = authData.uid;
-		  alert("Image 2uploaded");
           ref.child("users").child(userKey).update({ 
 			  "photo": srcData
 			  });
-			  alert("Image uploaded");
 		  window.location="PersonalProfile.html";
 		  return false;
 		
@@ -583,13 +578,13 @@
 
 				<div class="modal-body">
 					<div class="form-group has-feedback">	<!--NAME-->
-						<label class="control-label" for="namelabel">First name</label>
-						<input type="text" class="form-control" id="* fnameinput" aria-describedby="nameinput" required="" maxlength="25">
+						<label class="control-label" for="namelabel">*First name</label>
+						<input type="text" class="form-control" id="fnameinput" aria-describedby="nameinput" required="" maxlength="25">
 					</div>
 					
 					<div class="form-group has-feedback">	<!--NAME-->
-						<label class="control-label" for="namelabel">Last name</label>
-						<input type="text" class="form-control" id="* lnameinput" aria-describedby="nameinput" required="" maxlength="25">
+						<label class="control-label" for="namelabel">*Last name</label>
+						<input type="text" class="form-control" id="lnameinput" aria-describedby="nameinput" required="" maxlength="25">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--SKILLS-->
@@ -598,18 +593,18 @@
 					</div>
 						
 					<div class="form-group has-feedback">	<!--TOWN-->
-						<label class="control-label" for="locationlabel">Town</label>
-						<input type="text" class="form-control" id="* towninput" aria-describedby="towninput" required="" maxlength="30">
+						<label class="control-label" for="locationlabel">*Town</label>
+						<input type="text" class="form-control" id="towninput" aria-describedby="towninput" required="" maxlength="30">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--COUNTY-->
-						<label class="control-label" for="locationlabel">County</label>
-						<input type="text" class="form-control" id="* countyinput" aria-describedby="countyinput" required="" maxlength="20">
+						<label class="control-label" for="locationlabel">*County</label>
+						<input type="text" class="form-control" id="countyinput" aria-describedby="countyinput" required="" maxlength="20">
 					</div>
 						
 					<div class="form-group has-feedback">	<!--Telephone-->
-						<label class="control-label" for="phonelabel">Telephone</label>
-						<input type="tel" class="form-control" id="* phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
+						<label class="control-label" for="phonelabel">*Telephone</label>
+						<input type="tel" class="form-control" id="phoneinput" aria-describedby="phoneinput" required="" maxlength="25">
 					</div>
 					
 					<center>
