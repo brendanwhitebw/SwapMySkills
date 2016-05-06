@@ -67,10 +67,10 @@
 			return;
 		}
 		// pass all user info to function
-			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills);
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.userdescription, data.skills, data.photo);
 		});
 	
-		function displayUserDetails(fname, lname, email, county, telephone, town, userdescription, skills) {
+		function displayUserDetails(fname, lname, email, county, telephone, town, userdescription, skills, photo) {
 			$('#load').remove();
 			// fill page with user details from database
 			$('#profileName span').text(fname + ' ' + lname);
@@ -79,6 +79,11 @@
 			$('#displayTelephone span').text(telephone);
 			$('#displaySkill span').text(skills);
 			$('#profileText').text(userdescription);
+			if (photo == null){
+			 document.getElementById('profilePic').src = "img/nophoto.jpg";
+			}else{
+				document.getElementById('profilePic').setAttribute( 'src', photo);
+			}
 			
 			//fill modal with user details
 			$('#fnameinput').val(fname); 
@@ -96,7 +101,7 @@
 			$('#load').remove();
 			// for each ad name display and loop
 			snapshot.forEach(function(snapshot2){
-				var ad = ('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
+				var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
 				// add each listing to div with id = r1
 				$("#r1").append(ad);
 			});
@@ -283,6 +288,41 @@
 		function AddListing(){
 			location.href = "Create Listing.html";
 		}
+		
+		var srcData;
+		function encodeImage(){
+
+		    var filesSelected = document.getElementById("js-upload-files").files;
+		    if (filesSelected.length > 0)
+		    {
+		        var fileToLoad = filesSelected[0];
+
+		        var fileReader = new FileReader();
+
+		        fileReader.onload = function(fileLoadedEvent) {
+		        	//this converts are img into base64
+		            srcData = fileLoadedEvent.target.result; 
+		  			
+					
+		            alert("Image encoded");
+					}
+				
+		        }
+		        fileReader.readAsDataURL(fileToLoad);
+		    }
+
+		function photoFunction()	{
+		var userKey = authData.uid;
+		  alert("Image 2uploaded");
+          ref.child("users").child(userKey).update({ 
+			  "photo": srcData
+			  });
+			  alert("Image uploaded");
+		  window.location="PersonalProfile.html";
+		  return false;
+		
+		}
+			
 	</script>
   
 	<!--FIXED MAIN NAVBAR-->
@@ -362,7 +402,7 @@
 
 			<!--PROFILE PIC-->
 			<div>
-				<img class="img-rounded" src="http://addicted2success.com/wp-content/uploads/2012/12/Jack-Dorsey-Founder-Of-Twitter.jpg"  alt="Profile image" id="profilePic">
+				<img class="img-rounded" src="img/white.jpg"  alt="No image" id="profilePic" onError="this.src='img/nophoto.png';">
 			</div>
 			<!--END PROFILE PIC-->
 
@@ -375,9 +415,9 @@
           <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
             <div class="form-inline">
               <div class="form-group">
-                <input type="file" name="files[]" id="js-upload-files" multiple>
+                <input type="file" name="files[]" id="js-upload-files" type="file" onchange="encodeImage();">
               </div>
-              <input type="submit" class="btn btn-sm btn-primary" id="js-upload-submit" value="UPDATE PROFILE PICTURE">
+              <input type="submit" class="btn btn-sm btn-primary" onclick="photoFunction();" id="js-upload-submit" value="UPDATE PROFILE PICTURE">
             </div>
           </form>
 			</div>

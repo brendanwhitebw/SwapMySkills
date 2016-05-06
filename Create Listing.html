@@ -58,6 +58,7 @@
   <body>
   
   <script>
+  var srcData;
   var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
   var authData = myDataRef.getAuth();
   // get logged in users id
@@ -99,6 +100,7 @@
       // this stores ad details in users/userid/listings
       myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
         {
+		photo: srcData,
         description: $('#ad-desc').val(),
         date: actualDate,
         type: $("#section option:selected").text()
@@ -114,6 +116,7 @@
       // this stores ad details under the skill name from dropdown menu and the ad name entered
       listRef.child($("#ad-title").val()).set( 
         {
+		photo: srcData,
         description: $('#ad-desc').val(),
         // logged in users id, defined up the top
         user: userKey,
@@ -190,6 +193,29 @@
   function Other(){
     sessionStorage.setItem('label', 'Other');
   }
+  
+
+	function encodeImage(){
+
+		var filesSelected = document.getElementById("js-upload-files").files;
+		if (filesSelected.length > 0)
+		{
+			var fileToLoad = filesSelected[0];
+
+			var fileReader = new FileReader();
+
+			fileReader.onload = function(fileLoadedEvent) {
+				//this converts are img into base64
+				srcData = fileLoadedEvent.target.result; 
+				
+				
+				alert("Image encoded");
+				}
+			
+			}
+			fileReader.readAsDataURL(fileToLoad);
+		}
+
   </script>
 
 <!--FIXED MAIN NAVBAR-->
@@ -284,14 +310,14 @@
           <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
             <div class="form-inline">
               <div class="form-group">
-                <input type="file" name="files[]" id="js-upload-files" multiple>
+                <input type="file" name="files[]" id="js-upload-files" onchange="encodeImage();">
               </div>
-              <input type="submit" class="btn btn-sm btn-primary" id="js-upload-submit" value="Upload photo">
+
             </div>
           </form>
 
 <!--
-          <!-- Drop Zone to drag and drop pics into ->
+          <!--   <input type="submit" class="btn btn-sm btn-primary" onclick="photoFunction();" id="js-upload-submit" value="Upload photo">  Drop Zone to drag and drop pics into ->
           <h4>Or drag and drop files below</h4>
           <div class="upload-drop-zone" id="drop-zone">
             Just drag and drop files here

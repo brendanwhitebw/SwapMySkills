@@ -62,6 +62,19 @@
     $('#DisplayNo span').text(telephone);
     $('#DisplayEmail span').text(email);
   }
+  var refPhoto = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + selectedUser + '/listings/' + selectedAd);
+    refPhoto.once("value", function(snapshot) {
+    var data = snapshot.val();
+    // pass in user info to function
+	
+    displayPhoto(data.photo);
+  });
+  
+  function displayPhoto(pic){
+	document.getElementById('pic').setAttribute( 'src', pic);
+  }
+  
+ 
   
 	function Logout(){
 	var myDataRef = new Firebase("https://sizzling-inferno-5934.firebaseio.com/");
@@ -327,9 +340,9 @@
   </div>-->
 
 
-  <!-- image container-->
-<div class="container"> 
-<img src="http://2.imimg.com/data2/YR/XN/MY-/9-250x250.jpg" alt="Image">
+  <!-- image-->
+<div> 
+<img class="img-rounded" src="img/white.jpg" alt="Profile image" id="pic" onError="this.src='img/nolisting.png';">
 </div><!--.container -->
 
 

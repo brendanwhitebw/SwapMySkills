@@ -56,10 +56,10 @@
 		ref.once("value", function(snapshot) {
 			var data = snapshot.val();
 			// pass details to display function
-			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.skills, data.userdescription);
+			displayUserDetails(data.fname, data.lname, data.email, data.county, data.telephone, data.town, data.skills, data.userdescription, data.photo);
 		});
 
-		function displayUserDetails(fname, lname, email, county, telephone, town, skills, userdescription) {
+		function displayUserDetails(fname, lname, email, county, telephone, town, skills, userdescription, photo) {
 		// display users details
 			$('#load').remove();
 			$('#DisplayLoc span').text(town + "," + county);
@@ -68,6 +68,7 @@
 			$('#DisplayEmail span').text(email);
 			$('#DisplaySkill span').text(skills);
 			$('#profileText').text(userdescription);
+			document.getElementById('profilePic').setAttribute( 'src', photo);
 			
 		}
 		// get selected user listings ref
@@ -81,7 +82,7 @@
 				$('#load').remove();
 				userRef.once("value", function(userSnapshot){
 					// render all listings on this account
-					var ad = ('<div class="col-md-4"><img class="img-rounded" src="img/mechanic.jpg" alt="mechanic"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a></div>');
+					var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a></div>');
 					// add each listing to div with id = r1
 					$("#r1").append(ad);
 				});
@@ -361,7 +362,7 @@
 
 			<!--PROFILE PIC-->
 			<div>
-				<img class="img-rounded" src="http://addicted2success.com/wp-content/uploads/2012/12/Jack-Dorsey-Founder-Of-Twitter.jpg"  alt="Profile image" id="profilePic">
+				<img class="img-rounded" src="img/white.jpg"  alt="Profile image" id="profilePic" onError="this.src='img/nophoto.jpg';">
 			</div>
 			<br/>
 			<!--END PROFILE PIC-->
