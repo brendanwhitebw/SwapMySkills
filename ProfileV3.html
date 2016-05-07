@@ -150,11 +150,11 @@
 					// check if users comment, if so have delete button
 					if(authData.uid == allTimesSnapshot.child("user").val()){
 						// generate each comment with pic, name, comment and how long ago it was posted
-						var com = ('<div class="media"><p class="pull-right"><small>' + ago + '</small></p><img src="http://lorempixel.com/40/40/people/1/"><div class="media-body"><a href="#" onclick="SaveProfileInfo(\''+ allTimesSnapshot.child("user").val() +'\')" title=""> ' + allTimesSnapshot.child("name").val() + '</a><br>' + allTimesSnapshot.child("comment").val()   + '</div><div id="delDiv"><button id="delButton" type="button" onclick="Del(\'' + allTimesSnapshot.key() + '\')" class="btn btn-danger">Delete</button></div></div>');		
+						var com = ('<div class="media"><p class="pull-right"><small>' + ago + '</small></p><div class="media-body"><a href="#" onclick="SaveProfileInfo(\''+ allTimesSnapshot.child("user").val() +'\')" title=""> ' + allTimesSnapshot.child("name").val() + '</a><br>' + allTimesSnapshot.child("comment").val()   + '</div><div id="delDiv"><button id="delButton" type="button" onclick="Del(\'' + allTimesSnapshot.key() + '\')" class="btn btn-danger">Delete</button></div></div>');		
 					}
 					else{
 					// generate each comment with pic, name, comment and how long ago it was posted
-						var com = ('<div class="media"><p class="pull-right"><small>' + ago + '</small></p><img src="http://lorempixel.com/40/40/people/1/"><div class="media-body"><a href="#" onclick="SaveProfileInfo(\''+ allTimesSnapshot.child("user").val() +'\')" title=""> ' + allTimesSnapshot.child("name").val() + '</a><br>' + allTimesSnapshot.child("comment").val()   + '</div></div>');	
+						var com = ('<div class="media"><p class="pull-right"><small>' + ago + '</small></p><div class="media-body"><a href="#" onclick="SaveProfileInfo(\''+ allTimesSnapshot.child("user").val() +'\')" title=""> ' + allTimesSnapshot.child("name").val() + '</a><br>' + allTimesSnapshot.child("comment").val()   + '</div></div>');	
 					}
 					$("#commentsList").append(com);	
 			});
