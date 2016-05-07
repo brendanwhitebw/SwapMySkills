@@ -58,7 +58,7 @@
   <body>
   
   <script>
-  var srcData;
+  var srcData = 0;
   var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
   var authData = myDataRef.getAuth();
   // get logged in users id
@@ -98,6 +98,7 @@
     // if flag is true no data will be written
     if(flag == false){
       // this stores ad details in users/userid/listings
+	  if(srcData != 0){
       myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
         {
 		photo: srcData,
@@ -106,6 +107,15 @@
         type: $("#section option:selected").text()
         }
       )
+	  }else{
+	  myDataRef.child("users").child(userKey).child("listings").child($("#ad-title").val()).set(
+        {
+        description: $('#ad-desc').val(),
+        date: actualDate,
+        type: $("#section option:selected").text()
+        }
+      )
+	  }
       // get reference to users details that posted the ad
       var time = new Date().getTime();
       var userRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/users/' + authData.uid );
@@ -431,7 +441,6 @@
         <ul class="nav navbar-nav navbar-center">
         <li><a href="about.html">About Us</a></li>
         <li><a href="terms.html">Terms & Conditions</a></li>
-        <li><a href="Sitemap.html">Sitemap</a></li>
         </ul>
       </div>
       <!--<div class="navbar-text pull-right">
@@ -454,7 +463,7 @@
           <!--END MODAL HEADER-->
           <!--MODAL BODY-->
           <div class="modal-body">
-            <p>For general inquiries please email ___@______.__</p>
+            <p>For general inquiries please email info@SwapMySkills.com</p>
           </div>
           <!--END MODAL BODY-->
           <!--MODAL FOOTER-->

@@ -29,7 +29,7 @@
   
   <body>
   <script>
-   
+   var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
     // dropdown menu, saves option selected so search results page can display choosen skill ads
     function ArtsAndCrafts(){
       sessionStorage.setItem('label', 'Arts and Crafts');
@@ -70,6 +70,20 @@
     function Other(){
       sessionStorage.setItem('label', 'Other');
     }
+	
+	function Logout(){
+		// log out user
+	   myDataRef.unauth();
+		var auth = myDataRef.getAuth();
+		if (auth) {
+			alert("error logging user out")
+		  }else{
+			alert("user logged out");
+		  }
+		  $('#profileNav').hide();
+		  $('#logOutNav').hide();
+	}
+	
     // show search results page when finished loading them
       $(window).load(function() {
     $("body").show();
@@ -91,14 +105,13 @@
       <div class="navbar-collapse collapse">
         <!--NAVIGATION LINKS-->
         <ul class="nav navbar-nav navbar-center">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">My Profile</a></li>
+          <li><a href="HomePageV2.html">Home</a></li>
+           <li id="profileNav"><a href="PersonalProfile.html">My Profile</a></li>
           <!--<li><a href="#">About Us</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Sitemap</a></li>-->
           <li><a href="#contact" data-toggle="modal">Contact Us</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#login">Log In</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#signup">Sign Up</a><li>
+		  <li id="logOutNav"><a href="#"  onclick="Logout()">Log Out</a></li>
         </ul>
         <!--END NAVIGATION LINKS-->
         <!--SEARCH BAR-->
@@ -216,7 +229,6 @@ d. misrepresent your identity or  current/previous positions and qualifications,
         <ul class="nav navbar-nav navbar-center">
         <li><a href="about.html">About Us</a></li>
         <li class="active"><a href="terms.html">Terms & Conditions</a></li>
-        <li><a href="Sitemap.html">Sitemap</a></li>
         </ul>
       </div>
       <!--<div class="navbar-text pull-right">
@@ -239,7 +251,7 @@ d. misrepresent your identity or  current/previous positions and qualifications,
           <!--END MODAL HEADER-->
           <!--MODAL BODY-->
           <div class="modal-body">
-            <p>For general inquiries please email ___@______.__</p>
+            <p>For general inquiries please email info@SwapMySkills.com</p>
           </div>
           <!--END MODAL BODY-->
           <!--MODAL FOOTER-->
@@ -252,7 +264,15 @@ d. misrepresent your identity or  current/previous positions and qualifications,
     </div>
     <!--END CONTACT MODAL-->
 
-
+		<script>
+			var ref = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
+			// check if users logged in an show appropreiate buttons
+			var authData = ref.getAuth();
+			if(authData == null){
+				document.getElementById("profileNav").style.display = "none";
+				document.getElementById("logOutNav").style.display = "none";
+			}
+		</script>
 
   
     <!-- Include all compiled plugins (below), or include individual files as needed -->
