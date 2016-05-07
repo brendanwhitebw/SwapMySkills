@@ -141,7 +141,29 @@
 							}
 						);
 						alert("Successfully created user account");
-
+				// log in with email and password
+					myDataRef.authWithPassword({
+					  email    : $('#emailinput').val(),
+					  password : $('#passwordinput').val()
+					}, function(error, authData) {
+					  if (error) {
+					  //alert(error);
+					  location.href = "error.html";
+					  } else {
+					  // hide/ show proflie an login buttons
+					  $('#inputSuccess2').val("");
+					  $('#inputSuccess3').val("");
+					  $('#loginbtn').hide();
+					  $('#signupbtn').hide();
+					  $('#logInNav').hide();
+					  $('#signUpNav').hide();
+					   
+					  $('#viewprofile').show();
+					  $('#logoutbtn').show();
+					  $('#profileNav').show();
+					  $('#logOutNav').show();
+					  }},{  remember: "sessionOnly"
+					});
 						// clear fields when user account created
 						$('#emailinput').val("");
 						$('#firstnameinput').val("");
