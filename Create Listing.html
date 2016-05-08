@@ -91,6 +91,9 @@
     else if (! /^[a-zA-Z0-9\s]+$/.test($("#ad-title").val())) {
       alert("Please use aphla-numeric characters");
     }
+	else if (/[\n\r]/g.test($('#ad-desc').val())){
+		alert("New line not allowed");
+	}
     else{
     flag=false;
     // gets skill from dropdown menu
@@ -105,6 +108,7 @@
           flag = true;
         }
       });
+
     // if flag is true no data will be written
     if(flag == false){
       // this stores ad details in users/userid/listings
