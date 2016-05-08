@@ -82,7 +82,10 @@
 				$('#load').remove();
 				userRef.once("value", function(userSnapshot){
 					// render all listings on this account
-					var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a></div>');
+					var desc = snapshot2.child("description").val();
+					desc = desc.replace(/\'/g, "");
+					desc = desc.replace(/\"/g, '');
+					var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ desc +'</p><a id="but" href="#" onclick="SaveInfo(\'' + userSnapshot.key() + '\',\'' + snapshot2.key() + '\',\'' + desc + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a></div>');
 					// add each listing to div with id = r1
 					$("#r1").append(ad);
 				});

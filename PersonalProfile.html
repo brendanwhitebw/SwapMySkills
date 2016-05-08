@@ -101,7 +101,10 @@
 			$('#load').remove();
 			// for each ad name display and loop
 			snapshot.forEach(function(snapshot2){
-				var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ snapshot2.child("description").val() +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + snapshot2.child("description").val() + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
+				var desc = snapshot2.child("description").val();
+				desc = desc.replace(/\'/g, "");
+				desc = desc.replace(/\"/g, '');
+				var ad = ('<div class="col-md-4"><img class="img-rounded" src="' + snapshot2.child("photo").val() + '" alt="no photo" onError="this.src=\'img/nolisting.png\';"><h3 class="hid"> '+ snapshot2.key() +' </h3><p class="p1">'+ desc +'</p><a id="but" href="#" onclick="SaveInfo(\'' + authData.uid + '\',\'' + snapshot2.key() + '\',\'' + desc + '\',\'' + snapshot2.child("date").val()  + '\')" class="btn btn-primary">View Listing</a>&nbsp;&nbsp;<a href="#" onclick="Del(\'' + snapshot2.key() + '\',\'' + snapshot2.child("type").val() + '\')" class="btn btn-danger">Delete Listing</a></div>');
 				// add each listing to div with id = r1
 				$("#r1").append(ad);
 			});
