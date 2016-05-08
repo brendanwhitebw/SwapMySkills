@@ -218,7 +218,7 @@
     sessionStorage.setItem('label', 'Other');
   }
   
-
+	// converts img to 64base encoded string
 	function encodeImage(){
 
 		var filesSelected = document.getElementById("js-upload-files").files;
@@ -229,7 +229,7 @@
 			var fileReader = new FileReader();
 
 			fileReader.onload = function(fileLoadedEvent) {
-				//this converts are img into base64
+				
 				srcData = fileLoadedEvent.target.result; 
 				}
 			
