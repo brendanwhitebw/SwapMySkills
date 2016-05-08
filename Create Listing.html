@@ -58,6 +58,16 @@
   <body>
   
   <script>
+  
+  		$(document).ready(function() {
+		  $('textarea').keypress(function(event) {
+
+				if (event.keyCode == 13) {
+					event.preventDefault();
+				}
+			});
+		});
+  
   var srcData = 0;
   var myDataRef = new Firebase('https://sizzling-inferno-5934.firebaseio.com/');
   var authData = myDataRef.getAuth();
