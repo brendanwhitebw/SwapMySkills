@@ -26,7 +26,6 @@
 		  for (var k = 0, ar = []; k <= 12; k++) {
 			ar[k] = k;
 		  }
-
 		  // randomize the array
 		  ar.sort(function () {
 			  return Math.random() - 0.5;
@@ -187,15 +186,14 @@
     }
 		
 		function login(){
-
 			// log in with email and password
 			myDataRef.authWithPassword({
 			  email    : $('#inputSuccess2').val(),
 			  password : $('#inputSuccess3').val()
 			}, function(error, authData) {
 			  if (error) {
-			  //alert(error);
-			  location.href = "error.html";
+			  alert(error);
+			  //location.href = "error.html";
 			  } else {
 			  // hide/ show proflie an login buttons
 			  $('#inputSuccess2').val("");
